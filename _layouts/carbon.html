@@ -47,7 +47,7 @@
     {% endif %}
     
     <!-- Page Content -->
-    <div class="cds-grid">
+    <div class="cds-grid{% unless page.url contains '/docs/' %} no-sidebar{% endunless %}">
       <!-- Sidebar Navigation (for lab pages) -->
       {% if page.url contains '/docs/' %}
       <aside class="cds-sidebar">
@@ -63,7 +63,7 @@
       {% endif %}
       
       <!-- Main Article -->
-      <article>
+      <article style="min-width: 0;">
         {{ content }}
       </article>
     </div>
