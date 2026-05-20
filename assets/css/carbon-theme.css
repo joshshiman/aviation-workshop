@@ -1,0 +1,430 @@
+/* IBM Carbon Design System Theme for GitHub Pages */
+/* Based on Carbon Design System v11 */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+:root {
+  /* Carbon Colors - Gray Scale */
+  --cds-gray-100: #161616;
+  --cds-gray-90: #262626;
+  --cds-gray-80: #393939;
+  --cds-gray-70: #525252;
+  --cds-gray-60: #6f6f6f;
+  --cds-gray-50: #8d8d8d;
+  --cds-gray-40: #a8a8a8;
+  --cds-gray-30: #c6c6c6;
+  --cds-gray-20: #e0e0e0;
+  --cds-gray-10: #f4f4f4;
+  
+  /* Carbon Colors - Blue */
+  --cds-blue-60: #0f62fe;
+  --cds-blue-70: #0043ce;
+  --cds-blue-80: #002d9c;
+  
+  /* Carbon Spacing */
+  --cds-spacing-03: 0.5rem;
+  --cds-spacing-05: 1rem;
+  --cds-spacing-06: 1.5rem;
+  --cds-spacing-07: 2rem;
+  --cds-spacing-09: 3rem;
+  
+  /* Carbon Typography */
+  --cds-productive-heading-06: 2.625rem;
+  --cds-productive-heading-05: 2rem;
+  --cds-productive-heading-04: 1.75rem;
+  --cds-productive-heading-03: 1.25rem;
+  --cds-body-long-02: 1rem;
+  --cds-code-02: 0.875rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: var(--cds-body-long-02);
+  line-height: 1.5;
+  color: var(--cds-gray-100);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+.cds-header {
+  background-color: var(--cds-gray-100);
+  color: #ffffff;
+  padding: var(--cds-spacing-05) 0;
+  border-bottom: 1px solid var(--cds-gray-80);
+}
+
+.cds-header-container {
+  max-width: 1584px;
+  margin: 0 auto;
+  padding: 0 var(--cds-spacing-05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cds-header-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: var(--cds-spacing-03);
+}
+
+.cds-header-name:hover {
+  color: var(--cds-gray-30);
+}
+
+/* Navigation */
+.cds-header-nav {
+  display: flex;
+  gap: var(--cds-spacing-05);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cds-header-nav a {
+  color: var(--cds-gray-30);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding: var(--cds-spacing-03) 0;
+  border-bottom: 3px solid transparent;
+  transition: all 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+.cds-header-nav a:hover {
+  color: #ffffff;
+  border-bottom-color: var(--cds-blue-60);
+}
+
+.cds-header-nav a.active {
+  color: #ffffff;
+  border-bottom-color: var(--cds-blue-60);
+}
+
+/* Main Content */
+.cds-content {
+  max-width: 1584px;
+  margin: 0 auto;
+  padding: var(--cds-spacing-07) var(--cds-spacing-05);
+}
+
+/* Grid Layout */
+.cds-grid {
+  display: grid;
+  grid-template-columns: 256px 1fr;
+  gap: var(--cds-spacing-07);
+  margin-top: var(--cds-spacing-07);
+}
+
+/* Sidebar */
+.cds-sidebar {
+  position: sticky;
+  top: var(--cds-spacing-05);
+  height: fit-content;
+}
+
+.cds-sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cds-sidebar-nav li {
+  margin-bottom: var(--cds-spacing-03);
+}
+
+.cds-sidebar-nav a {
+  display: block;
+  padding: var(--cds-spacing-03);
+  color: var(--cds-gray-100);
+  text-decoration: none;
+  font-size: 0.875rem;
+  border-left: 3px solid transparent;
+  transition: all 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+.cds-sidebar-nav a:hover {
+  background-color: var(--cds-gray-10);
+  border-left-color: var(--cds-blue-60);
+}
+
+.cds-sidebar-nav a.active {
+  background-color: var(--cds-gray-10);
+  border-left-color: var(--cds-blue-60);
+  font-weight: 600;
+}
+
+/* Typography */
+h1 {
+  font-size: var(--cds-productive-heading-06);
+  font-weight: 300;
+  line-height: 1.25;
+  margin: 0 0 var(--cds-spacing-06) 0;
+  color: var(--cds-gray-100);
+}
+
+h2 {
+  font-size: var(--cds-productive-heading-05);
+  font-weight: 400;
+  line-height: 1.25;
+  margin: var(--cds-spacing-07) 0 var(--cds-spacing-05) 0;
+  color: var(--cds-gray-100);
+  border-bottom: 1px solid var(--cds-gray-20);
+  padding-bottom: var(--cds-spacing-03);
+}
+
+h3 {
+  font-size: var(--cds-productive-heading-04);
+  font-weight: 400;
+  line-height: 1.29;
+  margin: var(--cds-spacing-06) 0 var(--cds-spacing-05) 0;
+  color: var(--cds-gray-100);
+}
+
+h4 {
+  font-size: var(--cds-productive-heading-03);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: var(--cds-spacing-05) 0 var(--cds-spacing-03) 0;
+  color: var(--cds-gray-100);
+}
+
+p {
+  margin: 0 0 var(--cds-spacing-05) 0;
+  color: var(--cds-gray-100);
+}
+
+/* Links */
+a {
+  color: var(--cds-blue-60);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--cds-blue-70);
+}
+
+a:visited {
+  color: var(--cds-blue-70);
+}
+
+/* Code */
+code {
+  font-family: 'IBM Plex Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: var(--cds-code-02);
+  background-color: var(--cds-gray-10);
+  padding: 0.125rem 0.5rem;
+  border-radius: 2px;
+  color: var(--cds-gray-100);
+}
+
+pre {
+  background-color: var(--cds-gray-10);
+  border: 1px solid var(--cds-gray-20);
+  border-radius: 2px;
+  padding: var(--cds-spacing-05);
+  overflow-x: auto;
+  margin: var(--cds-spacing-05) 0;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--cds-spacing-05) 0;
+  font-size: 0.875rem;
+}
+
+thead {
+  background-color: var(--cds-gray-10);
+  border-bottom: 1px solid var(--cds-gray-30);
+}
+
+th {
+  text-align: left;
+  padding: var(--cds-spacing-03) var(--cds-spacing-05);
+  font-weight: 600;
+  color: var(--cds-gray-100);
+}
+
+td {
+  padding: var(--cds-spacing-03) var(--cds-spacing-05);
+  border-bottom: 1px solid var(--cds-gray-20);
+}
+
+tr:hover {
+  background-color: var(--cds-gray-10);
+}
+
+/* Blockquotes / Notifications */
+blockquote {
+  margin: var(--cds-spacing-05) 0;
+  padding: var(--cds-spacing-05);
+  border-left: 4px solid var(--cds-blue-60);
+  background-color: var(--cds-gray-10);
+  color: var(--cds-gray-100);
+}
+
+blockquote p {
+  margin: 0;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0 0 var(--cds-spacing-05) 0;
+  padding-left: var(--cds-spacing-06);
+}
+
+li {
+  margin-bottom: var(--cds-spacing-03);
+}
+
+/* Buttons */
+.cds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.29;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+  background-color: var(--cds-blue-60);
+  color: #ffffff;
+}
+
+.cds-btn:hover {
+  background-color: var(--cds-blue-70);
+  text-decoration: none;
+}
+
+.cds-btn:active {
+  background-color: var(--cds-blue-80);
+}
+
+/* Breadcrumb */
+.cds-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--cds-spacing-03);
+  margin-bottom: var(--cds-spacing-05);
+  font-size: 0.875rem;
+  color: var(--cds-gray-70);
+}
+
+.cds-breadcrumb a {
+  color: var(--cds-blue-60);
+}
+
+.cds-breadcrumb-separator {
+  color: var(--cds-gray-50);
+}
+
+/* Footer */
+.cds-footer {
+  margin-top: var(--cds-spacing-09);
+  padding: var(--cds-spacing-07) 0;
+  border-top: 1px solid var(--cds-gray-20);
+  text-align: center;
+  color: var(--cds-gray-70);
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 1056px) {
+  .cds-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cds-sidebar {
+    position: static;
+  }
+  
+  .cds-header-nav {
+    flex-direction: column;
+    gap: var(--cds-spacing-03);
+  }
+}
+
+@media (max-width: 672px) {
+  .cds-header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--cds-spacing-05);
+  }
+  
+  .cds-content {
+    padding: var(--cds-spacing-05);
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--cds-gray-100);
+    color: var(--cds-gray-10);
+  }
+  
+  h1, h2, h3, h4, p {
+    color: var(--cds-gray-10);
+  }
+  
+  code {
+    background-color: var(--cds-gray-90);
+    color: var(--cds-gray-10);
+  }
+  
+  pre {
+    background-color: var(--cds-gray-90);
+    border-color: var(--cds-gray-80);
+  }
+  
+  table thead {
+    background-color: var(--cds-gray-90);
+  }
+  
+  td {
+    border-bottom-color: var(--cds-gray-80);
+  }
+  
+  tr:hover {
+    background-color: var(--cds-gray-90);
+  }
+  
+  blockquote {
+    background-color: var(--cds-gray-90);
+    color: var(--cds-gray-10);
+  }
+}
+
+/* Made with Bob */
