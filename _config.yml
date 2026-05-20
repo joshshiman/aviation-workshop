@@ -1,0 +1,66 @@
+# Aviation Workshop Documentation Site
+title: Aviation Workshop
+description: Build a real-time aviation warning system with Kafka, watsonx Orchestrate, and AI agents
+theme: jekyll-theme-cayman
+baseurl: "/aviation-workshop"
+url: "https://yourusername.github.io"
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Lab 1 - Setup
+    url: /docs/lab-1-setup/
+  - title: Lab 2 - Kafka
+    url: /docs/lab-2-kafka/
+  - title: Lab 3 - Agents
+    url: /docs/lab-3-agents/
+  - title: Lab 4 - Dashboard
+    url: /docs/lab-4-dashboard/
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Include/Exclude
+include:
+  - docs
+exclude:
+  - backend
+  - agents
+  - dashboard
+  - instructor
+  - venv
+  - "*.py"
+  - "*.pyc"
+  - requirements.txt
+  - .env
+  - .env.example
+  - .gitignore
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-titles-from-headings
+
+# Plugin settings
+relative_links:
+  enabled: true
+  collections: false
+
+optional_front_matter:
+  remove_originals: false
+
+titles_from_headings:
+  enabled: true
+  strip_title: false
+  collections: false
+
+# GitHub metadata
+repository: yourusername/aviation-workshop
+
+# Made with Bob
