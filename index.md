@@ -3,64 +3,106 @@ layout: carbon
 title: Home
 ---
 
-# ✈️ Aviation Workshop
+<div class="hero-section">
+  <h1>✈️ Aviation Workshop</h1>
+  <p class="hero-subtitle">Build a real-time aviation warning system using Kafka, watsonx Orchestrate, and AI agents</p>
+</div>
 
-Build a real-time aviation warning system using **Kafka**, **watsonx Orchestrate**, and **AI agents**.
+<div class="feature-grid">
+  <div class="feature-card">
+    <div class="feature-icon">📡</div>
+    <h3>Real-Time Streaming</h3>
+    <p>Process live flight and weather data using Apache Kafka for instant insights</p>
+  </div>
+  
+  <div class="feature-card">
+    <div class="feature-icon">🤖</div>
+    <h3>AI-Powered Analysis</h3>
+    <p>Deploy intelligent agents with watsonx Orchestrate to assess risks and generate alerts</p>
+  </div>
+  
+  <div class="feature-card">
+    <div class="feature-icon">🗺️</div>
+    <h3>Interactive Dashboard</h3>
+    <p>Visualize flights and weather hazards on an interactive map with real-time updates</p>
+  </div>
+  
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <h3>Hands-On Learning</h3>
+    <p>Build a complete system from scratch in 4 progressive labs</p>
+  </div>
+</div>
 
-## 🎯 Workshop Overview
+## 🎯 What You'll Build
 
-In this hands-on workshop, you'll build an intelligent aviation safety system that:
-- **Streams real-time data** from Kafka (weather events and flight telemetry)
-- **Analyzes conditions** using AI agents powered by watsonx Orchestrate
-- **Generates alerts** when flights approach hazardous weather
-- **Visualizes everything** on an interactive dashboard
+In this hands-on workshop, you'll create an intelligent aviation safety system that monitors flights in real-time and alerts operators when aircraft approach hazardous weather conditions.
 
-## 📚 Labs
+<div class="tech-stack">
+  <div class="tech-item">
+    <strong>Apache Kafka</strong>
+    <span>Real-time data streaming</span>
+  </div>
+  <div class="tech-item">
+    <strong>watsonx Orchestrate</strong>
+    <span>AI agent orchestration</span>
+  </div>
+  <div class="tech-item">
+    <strong>Python 3.11</strong>
+    <span>Backend development</span>
+  </div>
+  <div class="tech-item">
+    <strong>Leaflet.js</strong>
+    <span>Interactive maps</span>
+  </div>
+</div>
 
-### [Lab 1: Environment Setup](docs/lab-1-setup/)
-**Duration:** 30 minutes
+## 📚 Workshop Labs
 
-Set up your development environment and obtain API credentials:
-- Get workshop materials from Box
-- Join IBM Cloud and get watsonx Orchestrate credentials
-- Configure Python environment
-- Test your connections
+<div class="lab-cards">
+  <a href="docs/lab-1-setup/" class="lab-card">
+    <div class="lab-number">01</div>
+    <div class="lab-content">
+      <h3>Environment Setup</h3>
+      <p>Configure your development environment, obtain API credentials, and test connections</p>
+      <span class="lab-duration">⏱️ 30 minutes</span>
+    </div>
+  </a>
+  
+  <a href="docs/lab-2-kafka/" class="lab-card">
+    <div class="lab-number">02</div>
+    <div class="lab-content">
+      <h3>Kafka Consumer</h3>
+      <p>Build a consumer to process real-time flight and weather events from Kafka streams</p>
+      <span class="lab-duration">⏱️ 30-45 minutes</span>
+    </div>
+  </a>
+  
+  <a href="docs/lab-3-agents/" class="lab-card">
+    <div class="lab-number">03</div>
+    <div class="lab-content">
+      <h3>AI Agents</h3>
+      <p>Create intelligent agents that analyze weather conditions and assess flight risks</p>
+      <span class="lab-duration">⏱️ 60 minutes</span>
+    </div>
+  </a>
+  
+  <a href="docs/lab-4-dashboard/" class="lab-card">
+    <div class="lab-number">04</div>
+    <div class="lab-content">
+      <h3>Interactive Dashboard</h3>
+      <p>Build a real-time web dashboard with maps, alerts, and live data visualization</p>
+      <span class="lab-duration">⏱️ 45 minutes</span>
+    </div>
+  </a>
+</div>
 
-### [Lab 2: Kafka Consumer](docs/lab-2-kafka/)
-**Duration:** 30-45 minutes
+## 🚀 Getting Started
 
-Build a Kafka consumer to process real-time flight and weather events:
-- Create a Kafka consumer using prebuilt helpers
-- Process weather and flight events
-- Understand the event flow
-- Print and inspect data structures
-
-### [Lab 3: Building AI Agents](docs/lab-3-agents/)
-**Duration:** 60 minutes
-
-Create intelligent agents that analyze weather conditions and assess flight risks:
-- Build a Weather Analysis Tool using watsonx Orchestrate
-- Build a Flight Risk Assessment Tool
-- Test your tools locally
-- Deploy tools to watsonx Orchestrate
-
-### [Lab 4: Interactive Dashboard](docs/lab-4-dashboard/)
-**Duration:** 45 minutes
-
-Build a real-time web dashboard to visualize the system:
-- Create a real-time dashboard using vanilla JavaScript
-- Integrate Leaflet maps for geospatial visualization
-- Display flight positions and weather hazards
-- Show AI-generated alerts in real-time
-
-## 🛠️ Technologies Used
-
-- **Apache Kafka** - Real-time data streaming
-- **watsonx Orchestrate** - AI agent orchestration
-- **Python 3.11** - Backend development
-- **Flask** - API server
-- **Leaflet.js** - Interactive maps
-- **IBM Carbon Design System** - UI styling
+<div class="cta-section">
+  <p>Ready to build your aviation warning system?</p>
+  <a href="docs/lab-1-setup/" class="cds-btn cds-btn-primary">Start Lab 1: Environment Setup →</a>
+</div>
 
 ## 📋 Prerequisites
 
@@ -69,27 +111,9 @@ Build a real-time web dashboard to visualize the system:
 - Understanding of JSON data structures
 - A laptop with internet connection
 
-## 🚀 Getting Started
-
-1. Clone this repository
-2. Follow [Lab 1: Environment Setup](docs/lab-1-setup/) to configure your environment
-3. Work through each lab sequentially
-4. Ask questions and experiment!
-
-## 📖 Additional Resources
-
-- [watsonx Orchestrate Documentation](https://www.ibm.com/docs/en/watsonx/watson-orchestrate)
-- [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
-- [Leaflet.js Documentation](https://leafletjs.com/)
-- [IBM Carbon Design System](https://carbondesignsystem.com/)
-
-## 🤝 Support
-
-If you encounter issues during the workshop:
-- Check the troubleshooting section in each lab
-- Ask your instructor for help
-- Review the example files in the repository
-
 ---
 
-**Ready to begin?** Start with [Lab 1: Environment Setup](docs/lab-1-setup/) →
+<div class="info-box">
+  <strong>💡 Workshop Support</strong>
+  <p>If you encounter issues during the workshop, check the troubleshooting section in each lab or ask your instructor for help.</p>
+</div>
