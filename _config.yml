@@ -3,7 +3,7 @@ title: Aviation Workshop
 description: Build a real-time aviation warning system with Kafka, watsonx Orchestrate, and AI agents
 theme: jekyll-theme-cayman
 baseurl: "/aviation-workshop"
-url: "https://yourusername.github.io"
+url: "https://joshshiman.github.io"
 
 # Navigation
 navigation:
