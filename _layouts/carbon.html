@@ -36,7 +36,7 @@
   </header>
 
   <!-- Main Content -->
-  <main class="cds-content{% if page.url == '/' %} full-width{% endif %}">
+  <main class="cds-content">
     <!-- Breadcrumb -->
     {% if page.url != '/' %}
     <nav class="cds-breadcrumb" aria-label="Breadcrumb">
@@ -47,12 +47,16 @@
     {% endif %}
     
     <!-- Page Content -->
-    <div class="cds-grid{% unless page.url contains '/labs/' %} no-sidebar{% endunless %}">
-      <!-- Sidebar Navigation (for lab pages) -->
-      {% if page.url contains '/labs/' %}
+    <div class="cds-grid">
+      <!-- Sidebar Navigation -->
       <aside class="cds-sidebar">
         <nav aria-label="Side navigation">
           <ul class="cds-sidebar-nav">
+            {% if page.url == '/' %}
+            <li><a href="{{ '/' | relative_url }}" class="active">Home</a></li>
+            {% else %}
+            <li><a href="{{ '/' | relative_url }}">Home</a></li>
+            {% endif %}
             <li><a href="{{ '/labs/lab-1-setup/' | relative_url }}" {% if page.url contains 'lab-1-setup' %}class="active"{% endif %}>Lab 1: Environment Setup</a></li>
             <li><a href="{{ '/labs/lab-2-kafka/' | relative_url }}" {% if page.url contains 'lab-2-kafka' %}class="active"{% endif %}>Lab 2: Kafka Consumer</a></li>
             <li><a href="{{ '/labs/lab-3-agents/' | relative_url }}" {% if page.url contains 'lab-3-agents' %}class="active"{% endif %}>Lab 3: AI Agents</a></li>
@@ -60,7 +64,6 @@
           </ul>
         </nav>
       </aside>
-      {% endif %}
       
       <!-- Main Article -->
       <article style="min-width: 0;">
