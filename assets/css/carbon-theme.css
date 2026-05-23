@@ -131,7 +131,28 @@ body {
 .cds-sidebar {
   position: sticky;
   top: var(--cds-spacing-05);
-  height: fit-content;
+  max-height: calc(100vh - var(--cds-spacing-07));
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: var(--cds-spacing-03);
+}
+
+/* Sidebar scrollbar styling */
+.cds-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cds-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cds-sidebar::-webkit-scrollbar-thumb {
+  background: var(--cds-gray-30);
+  border-radius: 3px;
+}
+
+.cds-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--cds-gray-40);
 }
 
 .cds-sidebar-nav {
