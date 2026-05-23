@@ -33,6 +33,9 @@ exclude:
   - dashboard
   - instructor
   - venv
+  - vendor
+  - Gemfile
+  - Gemfile.lock
   - "*.py"
   - "*.pyc"
   - requirements.txt
