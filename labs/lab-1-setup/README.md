@@ -1,3 +1,8 @@
+---
+layout: carbon
+title: Lab 1 - Environment Setup
+---
+
 # Lab 1: Environment Setup
 
 **Duration:** 45 minutes
