@@ -112,7 +112,8 @@
       var headerRight = document.querySelector('.cds-header-right');
       
       if (mobileMenuToggle && headerRight) {
-        mobileMenuToggle.addEventListener('click', function() {
+        mobileMenuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
           headerRight.classList.toggle('active');
           mobileMenuToggle.classList.toggle('active');
           document.body.classList.toggle('menu-open');
@@ -128,15 +129,20 @@
           });
         });
         
-        // Close menu when clicking overlay
+        // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-          if (document.body.classList.contains('menu-open') &&
-              !headerRight.contains(e.target) &&
-              !mobileMenuToggle.contains(e.target)) {
-            headerRight.classList.remove('active');
-            mobileMenuToggle.classList.remove('active');
-            document.body.classList.remove('menu-open');
+          if (document.body.classList.contains('menu-open')) {
+            if (!headerRight.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+              headerRight.classList.remove('active');
+              mobileMenuToggle.classList.remove('active');
+              document.body.classList.remove('menu-open');
+            }
           }
+        });
+        
+        // Prevent clicks inside menu from closing it
+        headerRight.addEventListener('click', function(e) {
+          e.stopPropagation();
         });
       }
     });
