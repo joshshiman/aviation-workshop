@@ -101,35 +101,17 @@
       var sidebar = document.querySelector('.cds-sidebar');
       if (!sidebar) return;
       
-      var isOverSidebar = false;
-      
-      sidebar.addEventListener('mouseenter', function() {
-        isOverSidebar = true;
-        document.body.style.overflow = 'hidden';
-      });
-      
-      sidebar.addEventListener('mouseleave', function() {
-        isOverSidebar = false;
-        document.body.style.overflow = '';
-      });
-      
-      // Re-enable body scroll if sidebar scroll reaches limits
-      sidebar.addEventListener('scroll', function() {
-        if (isOverSidebar) {
-          var atTop = sidebar.scrollTop === 0;
-          var atBottom = sidebar.scrollHeight - sidebar.scrollTop === sidebar.clientHeight;
-          
-          if ((atTop || atBottom)) {
-            // Allow a small buffer before re-enabling body scroll
-            setTimeout(function() {
-              if (isOverSidebar && (sidebar.scrollTop === 0 ||
-                  sidebar.scrollHeight - sidebar.scrollTop === sidebar.clientHeight)) {
-                document.body.style.overflow = '';
-              }
-            }, 100);
-          }
+      sidebar.addEventListener('wheel', function(e) {
+        var atTop = sidebar.scrollTop === 0;
+        var atBottom = sidebar.scrollHeight - sidebar.scrollTop === sidebar.clientHeight;
+        var scrollingUp = e.deltaY < 0;
+        var scrollingDown = e.deltaY > 0;
+        
+        // Prevent page scroll only if sidebar can still scroll in that direction
+        if ((scrollingDown && !atBottom) || (scrollingUp && !atTop)) {
+          e.stopPropagation();
         }
-      });
+      }, { passive: true });
     });
   </script>
   
