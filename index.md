@@ -4,7 +4,7 @@ title: Home
 ---
 
 <div class="hero-section">
-  <h1>✈️ Aviation Workshop</h1>
+  <h1>✈️ IBM Bob Workshop</h1>
   <p class="hero-subtitle">Build a real-time aviation warning system using Kafka, watsonx Orchestrate, and AI agents</p>
 </div>
 
