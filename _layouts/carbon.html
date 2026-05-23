@@ -117,7 +117,7 @@
             .replace(/[^\w\s-]/g, '')
             .replace(/\s+/g, '-')
             .replace(/^-+|-+$/g, '');
-          heading.id = id || `heading-${index}`;
+          heading.id = id || 'heading-' + index;
         }
       });
       
@@ -131,7 +131,7 @@
         
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.href = `#${id}`;
+        a.href = '#' + id;
         a.textContent = text;
         
         if (level === 'h2') {
@@ -159,7 +159,7 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const id = entry.target.id;
-            const activeLink = tocNav.querySelector(`a[href="#${id}"]`);
+            const activeLink = tocNav.querySelector('a[href="#' + id + '"]');
             
             // Remove all active classes
             tocNav.querySelectorAll('a').forEach(link => {
@@ -189,7 +189,7 @@
           if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             // Update URL without jumping
-            history.pushState(null, null, `#${targetId}`);
+            history.pushState(null, null, '#' + targetId);
           }
         });
       });
