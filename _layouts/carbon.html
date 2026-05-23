@@ -95,42 +95,34 @@
     <p>Built with IBM Carbon Design System</p>
   </footer>
   
-  <!-- Table of Contents Generator -->
   {% if page.url contains '/labs/' %}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const article = document.querySelector('article');
-      const tocNav = document.getElementById('toc-nav');
+      var article = document.querySelector('article');
+      var tocNav = document.getElementById('toc-nav');
       
       if (!article || !tocNav) return;
       
-      // Get all h2 and h3 headings from the article
-      const headings = article.querySelectorAll('h2, h3');
-      
+      var headings = article.querySelectorAll('h2, h3');
       if (headings.length === 0) return;
       
-      // Generate IDs for headings that don't have them
-      headings.forEach((heading, index) => {
+      headings.forEach(function(heading, index) {
         if (!heading.id) {
-          const text = heading.textContent.trim();
-          const id = text.toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/^-+|-+$/g, '');
+          var text = heading.textContent.trim();
+          var id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/^-+|-+$/g, '');
           heading.id = id || 'heading-' + index;
         }
       });
       
-      // Build the TOC
-      let currentH2Item = null;
+      var currentH2Item = null;
       
-      headings.forEach(heading => {
-        const level = heading.tagName.toLowerCase();
-        const text = heading.textContent.trim();
-        const id = heading.id;
+      headings.forEach(function(heading) {
+        var level = heading.tagName.toLowerCase();
+        var text = heading.textContent.trim();
+        var id = heading.id;
         
-        const li = document.createElement('li');
-        const a = document.createElement('a');
+        var li = document.createElement('li');
+        var a = document.createElement('a');
         a.href = '#' + id;
         a.textContent = text;
         
@@ -143,8 +135,7 @@
           li.className = 'toc-h3';
           li.appendChild(a);
           
-          // Create nested ul if it doesn't exist
-          let subList = currentH2Item.querySelector('ul');
+          var subList = currentH2Item.querySelector('ul');
           if (!subList) {
             subList = document.createElement('ul');
             subList.className = 'toc-sublist';
@@ -154,19 +145,16 @@
         }
       });
       
-      // Highlight active section on scroll
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            const id = entry.target.id;
-            const activeLink = tocNav.querySelector('a[href="#' + id + '"]');
+            var id = entry.target.id;
+            var activeLink = tocNav.querySelector('a[href="#' + id + '"]');
             
-            // Remove all active classes
-            tocNav.querySelectorAll('a').forEach(link => {
+            tocNav.querySelectorAll('a').forEach(function(link) {
               link.classList.remove('active');
             });
             
-            // Add active class to current link
             if (activeLink) {
               activeLink.classList.add('active');
             }
@@ -177,18 +165,17 @@
         threshold: 0
       });
       
-      // Observe all headings
-      headings.forEach(heading => observer.observe(heading));
+      headings.forEach(function(heading) {
+        observer.observe(heading);
+      });
       
-      // Smooth scroll for TOC links
-      tocNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', (e) => {
+      tocNav.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
           e.preventDefault();
-          const targetId = link.getAttribute('href').substring(1);
-          const target = document.getElementById(targetId);
+          var targetId = link.getAttribute('href').substring(1);
+          var target = document.getElementById(targetId);
           if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Update URL without jumping
             history.pushState(null, null, '#' + targetId);
           }
         });
