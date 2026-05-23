@@ -63,6 +63,18 @@
             <li><a href="{{ '/labs/lab-4-dashboard/' | relative_url }}" {% if page.url contains 'lab-4-dashboard' %}class="active"{% endif %}>Lab 4: Dashboard</a></li>
           </ul>
         </nav>
+        
+        <!-- On This Page Navigation (for lab pages) -->
+        {% if page.url contains '/labs/' %}
+        <div class="cds-sidebar-toc">
+          <h4 class="cds-sidebar-toc-title">On This Page</h4>
+          <nav aria-label="Table of contents">
+            <ul class="cds-sidebar-toc-nav" id="toc-nav">
+              <!-- Will be populated by JavaScript -->
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
       </aside>
       
       <!-- Main Article -->
@@ -76,11 +88,113 @@
   <footer class="cds-footer">
     <p>
       {% if site.github.is_project_page %}
-        <a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by 
+        <a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by
         <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>
       {% endif %}
     </p>
     <p>Built with IBM Carbon Design System</p>
   </footer>
+  
+  <!-- Table of Contents Generator -->
+  {% if page.url contains '/labs/' %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const article = document.querySelector('article');
+      const tocNav = document.getElementById('toc-nav');
+      
+      if (!article || !tocNav) return;
+      
+      // Get all h2 and h3 headings from the article
+      const headings = article.querySelectorAll('h2, h3');
+      
+      if (headings.length === 0) return;
+      
+      // Generate IDs for headings that don't have them
+      headings.forEach((heading, index) => {
+        if (!heading.id) {
+          const text = heading.textContent.trim();
+          const id = text.toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/^-+|-+$/g, '');
+          heading.id = id || `heading-${index}`;
+        }
+      });
+      
+      // Build the TOC
+      let currentH2Item = null;
+      
+      headings.forEach(heading => {
+        const level = heading.tagName.toLowerCase();
+        const text = heading.textContent.trim();
+        const id = heading.id;
+        
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${id}`;
+        a.textContent = text;
+        
+        if (level === 'h2') {
+          li.className = 'toc-h2';
+          li.appendChild(a);
+          tocNav.appendChild(li);
+          currentH2Item = li;
+        } else if (level === 'h3' && currentH2Item) {
+          li.className = 'toc-h3';
+          li.appendChild(a);
+          
+          // Create nested ul if it doesn't exist
+          let subList = currentH2Item.querySelector('ul');
+          if (!subList) {
+            subList = document.createElement('ul');
+            subList.className = 'toc-sublist';
+            currentH2Item.appendChild(subList);
+          }
+          subList.appendChild(li);
+        }
+      });
+      
+      // Highlight active section on scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const activeLink = tocNav.querySelector(`a[href="#${id}"]`);
+            
+            // Remove all active classes
+            tocNav.querySelectorAll('a').forEach(link => {
+              link.classList.remove('active');
+            });
+            
+            // Add active class to current link
+            if (activeLink) {
+              activeLink.classList.add('active');
+            }
+          }
+        });
+      }, {
+        rootMargin: '-100px 0px -66%',
+        threshold: 0
+      });
+      
+      // Observe all headings
+      headings.forEach(heading => observer.observe(heading));
+      
+      // Smooth scroll for TOC links
+      tocNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
+          const target = document.getElementById(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Update URL without jumping
+            history.pushState(null, null, `#${targetId}`);
+          }
+        });
+      });
+    });
+  </script>
+  {% endif %}
 </body>
 </html>
