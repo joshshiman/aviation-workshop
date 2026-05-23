@@ -102,16 +102,17 @@
       if (!sidebar) return;
       
       sidebar.addEventListener('wheel', function(e) {
+        var delta = e.deltaY;
         var atTop = sidebar.scrollTop === 0;
         var atBottom = sidebar.scrollHeight - sidebar.scrollTop === sidebar.clientHeight;
-        var scrollingUp = e.deltaY < 0;
-        var scrollingDown = e.deltaY > 0;
         
-        // Prevent page scroll only if sidebar can still scroll in that direction
-        if ((scrollingDown && !atBottom) || (scrollingUp && !atTop)) {
+        // If scrolling down and not at bottom, or scrolling up and not at top
+        if ((delta > 0 && !atBottom) || (delta < 0 && !atTop)) {
+          e.preventDefault();
           e.stopPropagation();
+          sidebar.scrollTop += delta;
         }
-      }, { passive: true });
+      });
     });
   </script>
   
