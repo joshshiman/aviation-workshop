@@ -23,8 +23,12 @@
         <span>{{ site.title }}</span>
       </a>
       
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+        <span class="hamburger-icon"></span>
+      </button>
+      
       <div class="cds-header-right">
-        <nav>
+        <nav class="cds-header-nav-wrapper" id="main-nav">
           <ul class="cds-header-nav">
             <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a></li>
             <li><a href="{{ '/labs/lab-1-setup/' | relative_url }}" {% if page.url contains 'lab-1-setup' %}class="active"{% endif %}>Lab 1: Setup</a></li>
@@ -102,6 +106,30 @@
   </footer>
   
   <script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      var mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      var mainNav = document.getElementById('main-nav');
+      
+      if (mobileMenuToggle && mainNav) {
+        mobileMenuToggle.addEventListener('click', function() {
+          mainNav.classList.toggle('active');
+          mobileMenuToggle.classList.toggle('active');
+          document.body.classList.toggle('menu-open');
+        });
+        
+        // Close menu when clicking a link
+        var navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(function(link) {
+          link.addEventListener('click', function() {
+            mainNav.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+            document.body.classList.remove('menu-open');
+          });
+        });
+      }
+    });
+    
     // Theme toggle
     document.addEventListener('DOMContentLoaded', function() {
       var themeToggle = document.getElementById('theme-toggle');
