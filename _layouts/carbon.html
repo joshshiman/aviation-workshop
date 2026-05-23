@@ -32,6 +32,10 @@
           <li><a href="{{ '/labs/lab-4-dashboard/' | relative_url }}" {% if page.url contains 'lab-4-dashboard' %}class="active"{% endif %}>Lab 4: Dashboard</a></li>
         </ul>
       </nav>
+      
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="theme-toggle-icon">🌙</span>
+      </button>
     </div>
   </header>
 
@@ -96,6 +100,25 @@
   </footer>
   
   <script>
+    // Theme toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      var themeToggle = document.getElementById('theme-toggle');
+      var themeIcon = themeToggle.querySelector('.theme-toggle-icon');
+      var html = document.documentElement;
+      
+      // Check for saved theme preference, default to light
+      var currentTheme = localStorage.getItem('theme') || 'light';
+      html.setAttribute('data-theme', currentTheme);
+      themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+      
+      themeToggle.addEventListener('click', function() {
+        var newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      });
+    });
+    
     // Sidebar scroll handling - prevent main content scroll when hovering sidebar
     document.addEventListener('DOMContentLoaded', function() {
       var sidebar = document.querySelector('.cds-sidebar');

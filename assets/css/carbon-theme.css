@@ -112,6 +112,32 @@ body {
   font-weight: 600;
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-left: var(--cds-spacing-05);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-toggle-icon {
+  display: block;
+  line-height: 1;
+}
+
 /* Main Content */
 .cds-content {
   max-width: 1584px;
@@ -742,43 +768,91 @@ img {
   }
 }
 
-/* Dark Mode Support (Optional) */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--cds-gray-100);
-    color: var(--cds-gray-10);
-  }
-  
-  h1, h2, h3, h4, p {
-    color: var(--cds-gray-10);
-  }
-  
-  code {
-    background-color: var(--cds-gray-90);
-    color: var(--cds-gray-10);
-  }
-  
-  pre {
-    background-color: var(--cds-gray-90);
-    border-color: var(--cds-gray-80);
-  }
-  
-  table thead {
-    background-color: var(--cds-gray-90);
-  }
-  
-  td {
-    border-bottom-color: var(--cds-gray-80);
-  }
-  
-  tr:hover {
-    background-color: var(--cds-gray-90);
-  }
-  
-  blockquote {
-    background-color: var(--cds-gray-90);
-    color: var(--cds-gray-10);
-  }
+/* Dark Mode Styles */
+html[data-theme="dark"] body {
+  background-color: var(--cds-gray-100);
+  color: var(--cds-gray-10);
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] p {
+  color: var(--cds-gray-10);
+}
+
+html[data-theme="dark"] code {
+  background-color: var(--cds-gray-90);
+  color: var(--cds-gray-10);
+}
+
+html[data-theme="dark"] pre {
+  background-color: var(--cds-gray-90);
+  border-color: var(--cds-gray-80);
+}
+
+html[data-theme="dark"] table thead {
+  background-color: var(--cds-gray-90);
+}
+
+html[data-theme="dark"] td {
+  border-bottom-color: var(--cds-gray-80);
+}
+
+html[data-theme="dark"] tr:hover {
+  background-color: var(--cds-gray-90);
+}
+
+html[data-theme="dark"] blockquote {
+  background-color: var(--cds-gray-90);
+  color: var(--cds-gray-10);
+}
+
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .tech-item {
+  background-color: var(--cds-gray-90);
+  border-color: var(--cds-gray-80);
+}
+
+html[data-theme="dark"] .lab-card {
+  background-color: var(--cds-gray-90);
+  border-color: var(--cds-gray-80);
+}
+
+html[data-theme="dark"] .lab-card:hover {
+  border-color: var(--cds-blue-60);
+  box-shadow: 0 2px 8px rgba(15, 98, 254, 0.3);
+}
+
+html[data-theme="dark"] .cta-section {
+  background-color: var(--cds-gray-90);
+}
+
+html[data-theme="dark"] .info-box {
+  background-color: var(--cds-gray-90);
+  border-left-color: var(--cds-blue-60);
+}
+
+html[data-theme="dark"] .cds-sidebar-nav a:hover,
+html[data-theme="dark"] .cds-sidebar-nav a.active {
+  background-color: var(--cds-gray-90);
+}
+
+html[data-theme="dark"] .cds-sidebar-toc {
+  border-top-color: var(--cds-gray-80);
+}
+
+html[data-theme="dark"] .cds-sidebar-toc-nav a:hover {
+  background-color: var(--cds-gray-90);
+}
+
+html[data-theme="dark"] .cds-sidebar-toc-nav a.active {
+  background-color: var(--cds-gray-90);
+}
+
+html[data-theme="dark"] .cds-footer {
+  border-top-color: var(--cds-gray-80);
 }
 
 /* Made with Bob */
