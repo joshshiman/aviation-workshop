@@ -147,12 +147,14 @@ Bob should create a file similar to this structure:
 
 ### Step 1: Run Your Consumer
 
-In your terminal (with venv activated):
+In Bob IDE's integrated terminal (with venv activated):
 
 ```bash
 cd workshop/backend
 python consumer.py
 ```
+
+> 💡 **Reminder:** Open a terminal in Bob IDE: Click the **three dots (⋮)** → **Terminal** → **New Terminal** (or use `Ctrl+Shift+` backtick)
 
 ### Step 3: Observe the Output
 

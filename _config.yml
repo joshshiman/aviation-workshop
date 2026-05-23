@@ -10,13 +10,13 @@ navigation:
   - title: Home
     url: /
   - title: Lab 1 - Setup
-    url: /docs/lab-1-setup/
+    url: /labs/lab-1-setup/
   - title: Lab 2 - Kafka
-    url: /docs/lab-2-kafka/
+    url: /labs/lab-2-kafka/
   - title: Lab 3 - Agents
-    url: /docs/lab-3-agents/
+    url: /labs/lab-3-agents/
   - title: Lab 4 - Dashboard
-    url: /docs/lab-4-dashboard/
+    url: /labs/lab-4-dashboard/
 
 # Build settings
 markdown: kramdown
@@ -26,7 +26,7 @@ kramdown:
 
 # Include/Exclude
 include:
-  - docs
+  - labs
 exclude:
   - backend
   - agents

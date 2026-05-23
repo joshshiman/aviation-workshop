@@ -26,17 +26,17 @@
       <nav>
         <ul class="cds-header-nav">
           <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a></li>
-          <li><a href="{{ '/docs/lab-1-setup/' | relative_url }}" {% if page.url contains 'lab-1-setup' %}class="active"{% endif %}>Lab 1: Setup</a></li>
-          <li><a href="{{ '/docs/lab-2-kafka/' | relative_url }}" {% if page.url contains 'lab-2-kafka' %}class="active"{% endif %}>Lab 2: Kafka</a></li>
-          <li><a href="{{ '/docs/lab-3-agents/' | relative_url }}" {% if page.url contains 'lab-3-agents' %}class="active"{% endif %}>Lab 3: Agents</a></li>
-          <li><a href="{{ '/docs/lab-4-dashboard/' | relative_url }}" {% if page.url contains 'lab-4-dashboard' %}class="active"{% endif %}>Lab 4: Dashboard</a></li>
+          <li><a href="{{ '/labs/lab-1-setup/' | relative_url }}" {% if page.url contains 'lab-1-setup' %}class="active"{% endif %}>Lab 1: Setup</a></li>
+          <li><a href="{{ '/labs/lab-2-kafka/' | relative_url }}" {% if page.url contains 'lab-2-kafka' %}class="active"{% endif %}>Lab 2: Kafka</a></li>
+          <li><a href="{{ '/labs/lab-3-agents/' | relative_url }}" {% if page.url contains 'lab-3-agents' %}class="active"{% endif %}>Lab 3: Agents</a></li>
+          <li><a href="{{ '/labs/lab-4-dashboard/' | relative_url }}" {% if page.url contains 'lab-4-dashboard' %}class="active"{% endif %}>Lab 4: Dashboard</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="cds-content">
+  <main class="cds-content{% if page.url == '/' %} full-width{% endif %}">
     <!-- Breadcrumb -->
     {% if page.url != '/' %}
     <nav class="cds-breadcrumb" aria-label="Breadcrumb">
@@ -47,16 +47,16 @@
     {% endif %}
     
     <!-- Page Content -->
-    <div class="cds-grid{% unless page.url contains '/docs/' %} no-sidebar{% endunless %}">
+    <div class="cds-grid{% unless page.url contains '/labs/' %} no-sidebar{% endunless %}">
       <!-- Sidebar Navigation (for lab pages) -->
-      {% if page.url contains '/docs/' %}
+      {% if page.url contains '/labs/' %}
       <aside class="cds-sidebar">
         <nav aria-label="Side navigation">
           <ul class="cds-sidebar-nav">
-            <li><a href="{{ '/docs/lab-1-setup/' | relative_url }}" {% if page.url contains 'lab-1-setup' %}class="active"{% endif %}>Lab 1: Environment Setup</a></li>
-            <li><a href="{{ '/docs/lab-2-kafka/' | relative_url }}" {% if page.url contains 'lab-2-kafka' %}class="active"{% endif %}>Lab 2: Kafka Consumer</a></li>
-            <li><a href="{{ '/docs/lab-3-agents/' | relative_url }}" {% if page.url contains 'lab-3-agents' %}class="active"{% endif %}>Lab 3: AI Agents</a></li>
-            <li><a href="{{ '/docs/lab-4-dashboard/' | relative_url }}" {% if page.url contains 'lab-4-dashboard' %}class="active"{% endif %}>Lab 4: Dashboard</a></li>
+            <li><a href="{{ '/labs/lab-1-setup/' | relative_url }}" {% if page.url contains 'lab-1-setup' %}class="active"{% endif %}>Lab 1: Environment Setup</a></li>
+            <li><a href="{{ '/labs/lab-2-kafka/' | relative_url }}" {% if page.url contains 'lab-2-kafka' %}class="active"{% endif %}>Lab 2: Kafka Consumer</a></li>
+            <li><a href="{{ '/labs/lab-3-agents/' | relative_url }}" {% if page.url contains 'lab-3-agents' %}class="active"{% endif %}>Lab 3: AI Agents</a></li>
+            <li><a href="{{ '/labs/lab-4-dashboard/' | relative_url }}" {% if page.url contains 'lab-4-dashboard' %}class="active"{% endif %}>Lab 4: Dashboard</a></li>
           </ul>
         </nav>
       </aside>

@@ -60,7 +60,7 @@ In this hands-on workshop, you'll create an intelligent aviation safety system t
 ## 📚 Workshop Labs
 
 <div class="lab-cards">
-  <a href="docs/lab-1-setup/" class="lab-card">
+  <a href="labs/lab-1-setup/" class="lab-card">
     <div class="lab-number">01</div>
     <div class="lab-content">
       <h3>Environment Setup</h3>
@@ -69,7 +69,7 @@ In this hands-on workshop, you'll create an intelligent aviation safety system t
     </div>
   </a>
   
-  <a href="docs/lab-2-kafka/" class="lab-card">
+  <a href="labs/lab-2-kafka/" class="lab-card">
     <div class="lab-number">02</div>
     <div class="lab-content">
       <h3>Kafka Consumer</h3>
@@ -78,7 +78,7 @@ In this hands-on workshop, you'll create an intelligent aviation safety system t
     </div>
   </a>
   
-  <a href="docs/lab-3-agents/" class="lab-card">
+  <a href="labs/lab-3-agents/" class="lab-card">
     <div class="lab-number">03</div>
     <div class="lab-content">
       <h3>AI Agents</h3>
@@ -87,7 +87,7 @@ In this hands-on workshop, you'll create an intelligent aviation safety system t
     </div>
   </a>
   
-  <a href="docs/lab-4-dashboard/" class="lab-card">
+  <a href="labs/lab-4-dashboard/" class="lab-card">
     <div class="lab-number">04</div>
     <div class="lab-content">
       <h3>Interactive Dashboard</h3>
@@ -101,7 +101,7 @@ In this hands-on workshop, you'll create an intelligent aviation safety system t
 
 <div class="cta-section">
   <p>Ready to build your aviation warning system?</p>
-  <a href="docs/lab-1-setup/" class="cds-btn cds-btn-primary">Start Lab 1: Environment Setup →</a>
+  <a href="labs/lab-1-setup/" class="cds-btn cds-btn-primary">Start Lab 1: Environment Setup →</a>
 </div>
 
 ## 📋 Prerequisites

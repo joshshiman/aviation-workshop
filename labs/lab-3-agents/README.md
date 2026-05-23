@@ -309,7 +309,7 @@ You should see both tools in the list:
 
 ---
 
-## Part 5: Create a Supervisor Agent (Optional, 10 min)
+## Part 5: Create a Supervisor Agent
 
 ### What Is an Agent?
 

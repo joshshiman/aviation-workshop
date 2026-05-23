@@ -119,6 +119,12 @@ body {
   padding: var(--cds-spacing-07) var(--cds-spacing-05);
 }
 
+/* Full-width content for home page */
+.cds-content.full-width {
+  max-width: 100%;
+  padding: var(--cds-spacing-07) var(--cds-spacing-09);
+}
+
 /* Grid Layout */
 .cds-grid {
   display: grid;
@@ -384,12 +390,10 @@ img {
 /* Home Page Styles */
 .hero-section {
   text-align: center;
-  padding: var(--cds-spacing-09) 0;
+  padding: var(--cds-spacing-09) var(--cds-spacing-09);
   background: linear-gradient(135deg, #0f62fe 0%, #002d9c 100%);
   color: #ffffff;
-  margin: calc(var(--cds-spacing-07) * -1) calc(var(--cds-spacing-05) * -1) var(--cds-spacing-09);
-  padding-left: var(--cds-spacing-05);
-  padding-right: var(--cds-spacing-05);
+  margin: calc(var(--cds-spacing-07) * -1) calc(var(--cds-spacing-09) * -1) var(--cds-spacing-09);
 }
 
 .hero-section h1 {

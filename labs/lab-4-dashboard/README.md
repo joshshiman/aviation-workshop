@@ -59,9 +59,13 @@ The dashboard will:
 
 ### Step 1: Navigate to Dashboard Directory
 
+In Bob IDE's integrated terminal:
+
 ```bash
 cd workshop/dashboard
 ```
+
+> 💡 **Reminder:** Open a terminal in Bob IDE: Click the **three dots (⋮)** → **Terminal** → **New Terminal** (or use `Ctrl+Shift+` backtick)
 
 You should see:
 - `index.html` - ✅ **Prebuilt HTML structure** (already exists)
