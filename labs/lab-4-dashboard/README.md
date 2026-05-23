@@ -20,8 +20,8 @@ By the end of this lab, you will:
 - ✅ Completed Lab 1 (Environment Setup)
 - ✅ Completed Lab 2 (Kafka Consumer)
 - ✅ Completed Lab 3 (Orchestrate Agents)
-- ✅ Kafka consumer running in background
-- ✅ Mock producer streaming data
+- ✅ Your workshop backend code is ready to expose dashboard data
+- ✅ Live sample data will be available during the lab
 
 ---
 
@@ -41,8 +41,8 @@ By the end of this lab, you will:
          │
          ▼
 ┌─────────────────┐
-│ Kafka Consumer  │
-│  (Lab 2 Code)   │
+│ Backend Data    │
+│   Processing    │
 └─────────────────┘
 ```
 
@@ -57,30 +57,41 @@ The dashboard will:
 
 ## Part 1: Set Up Dashboard Files (5 min)
 
-### Step 1: Navigate to Dashboard Directory
+### Step 1: Navigate to the Workshop Directory
 
-In Bob IDE's integrated terminal:
+In Bob IDE's integrated terminal, move into the `workshop` folder and stay there for the rest of this lab unless a step says otherwise:
 
 ```bash
-cd workshop/dashboard
+cd workshop
 ```
 
 > 💡 **Reminder:** Open a terminal in Bob IDE: Click the **three dots (⋮)** → **Terminal** → **New Terminal** (or use `Ctrl+Shift+` backtick)
 
+> 💡 **Working directory tip:** Each new terminal may start in the repository root. If a command below does not work, first run `cd workshop`.
+
+### Terminal Setup for This Lab
+
+Use separate terminals so you do not need to stop and restart commands:
+
+- **Terminal 1:** Run the backend API with `python backend/api_server.py`
+- **Terminal 2:** Open the static dashboard page with `open dashboard/index.html`
+- **Optional Terminal 3:** Test API endpoints with `curl`
+
 You should see:
-- `index.html` - ✅ **Prebuilt HTML structure** (already exists)
-- `style.css` - ✅ **Prebuilt styles** (already exists)
-- `app.js` - **You'll create this file in Part 3**
+- `dashboard/index.html` - ✅ **Prebuilt HTML structure** (already exists)
+- `dashboard/style.css` - ✅ **Prebuilt styles** (already exists)
+- `dashboard/app.js` - **You'll create this file in Part 3**
+- `backend/api_server.py` - **You'll create this file in Part 2**
 
 ### Step 2: Review the Prebuilt Assets
 
 The dashboard uses **IBM Carbon Design System** styling for a professional, enterprise look.
 
-**✅ Prebuilt files (already in your workshop directory):**
+**✅ Prebuilt files (already in your `workshop/dashboard` directory):**
 - `index.html` - HTML structure with IBM Plex Sans font, Leaflet map container, alerts section
 - `style.css` - Carbon-inspired styles (colors, spacing, typography, alert cards)
 
-Open `index.html` to see the structure:
+Open `dashboard/index.html` to see the structure:
 
 ```html
 <!DOCTYPE html>
@@ -141,7 +152,7 @@ Open `index.html` to see the structure:
 
 ## Part 2: Create Backend API (15 min)
 
-Before building the frontend, we need a simple API to serve data from Kafka.
+Before opening the dashboard page, we need a simple API that serves the latest flight, hazard, and alert data.
 
 ### Step 1: Create Flask API Server
 
@@ -150,14 +161,13 @@ Create `workshop/backend/api_server.py`:
 **🤖 Bob Prompt:**
 ```
 Create a Flask API server that:
-1. Imports the Kafka consumer from consumer.py
-2. Stores the latest 50 flight and weather events in memory
-3. Provides these endpoints:
+1. Stores the latest 50 flight and weather events in memory
+2. Provides these endpoints:
    - GET /api/flights - Returns list of active flights
    - GET /api/weather - Returns list of weather hazards
    - GET /api/alerts - Returns list of proximity alerts
-4. Runs on port 8000 with CORS enabled (configurable via API_PORT environment variable)
-5. Updates data in background thread consuming from Kafka
+3. Runs on port 8000 with CORS enabled (configurable via API_PORT environment variable)
+4. Updates data in a background thread using your existing backend event-processing logic
 
 Use the data schemas from instructor/DATA_SCHEMA.md.
 Include proper error handling and logging.
@@ -234,7 +244,7 @@ export API_PORT=5001
 python backend/api_server.py
 ```
 
-Test endpoints in another terminal:
+In Terminal 2 or Terminal 3, from `workshop/`, test the endpoints:
 ```bash
 # Test flights endpoint
 curl http://localhost:8000/api/flights
@@ -430,12 +440,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ### Step 2: Test the Dashboard
 
-1. Make sure your API server is running:
+1. In Terminal 1, make sure your API server is running:
    ```bash
    python backend/api_server.py
    ```
 
-2. Open the dashboard in your browser:
+2. In Terminal 2, open the static dashboard page in your browser:
    ```bash
    open dashboard/index.html
    # Or on Linux: xdg-open dashboard/index.html
@@ -455,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ### Optional: Add WebSocket Support
 
-For true real-time updates without polling, you can upgrade to WebSockets.
+For true real-time updates without polling, you can optionally upgrade from a static page with polling to WebSockets.
 
 **🤖 Bob Prompt:**
 ```
@@ -475,17 +485,15 @@ Upgrade the Flask API to support WebSockets using Flask-SocketIO:
 
 ### Complete System Test
 
-1. **Start Mock Producer** (instructor machine):
-   ```bash
-   python instructor/mock_producer.py
-   ```
+1. **Confirm live data is available**:
+   - Your instructor will provide the live data stream for the lab
 
-2. **Start API Server**:
+2. **Start API Server** in Terminal 1:
    ```bash
    python backend/api_server.py
    ```
 
-3. **Open Dashboard**:
+3. **Open Dashboard** in Terminal 2:
    ```bash
    open dashboard/index.html
    ```
@@ -548,7 +556,7 @@ CORS(app)
 **Solution:**
 1. Check API endpoints return data:
    ```bash
-   curl http://localhost:5000/api/flights
+   curl http://localhost:8000/api/flights
    ```
 2. Check browser console for errors
 3. Verify mock producer is running
