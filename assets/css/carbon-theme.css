@@ -119,23 +119,12 @@ body {
   padding: var(--cds-spacing-07) var(--cds-spacing-05);
 }
 
-/* Full-width content for home page */
-.cds-content.full-width {
-  max-width: 100%;
-  padding: var(--cds-spacing-07) var(--cds-spacing-09);
-}
-
 /* Grid Layout */
 .cds-grid {
   display: grid;
   grid-template-columns: 256px minmax(0, 1fr);
   gap: var(--cds-spacing-07);
   margin-top: var(--cds-spacing-07);
-}
-
-.cds-grid.no-sidebar {
-  grid-template-columns: 1fr;
-  max-width: 1056px;
 }
 
 /* Sidebar */
@@ -390,14 +379,11 @@ img {
 /* Home Page Styles */
 .hero-section {
   text-align: center;
-  padding: var(--cds-spacing-09);
+  padding: var(--cds-spacing-09) var(--cds-spacing-06);
   background: linear-gradient(135deg, #0f62fe 0%, #002d9c 100%);
   color: #ffffff;
-  margin-left: calc(var(--cds-spacing-09) * -1);
-  margin-right: calc(var(--cds-spacing-09) * -1);
-  margin-top: calc(var(--cds-spacing-07) * -1);
   margin-bottom: var(--cds-spacing-09);
-  width: calc(100% + (var(--cds-spacing-09) * 2));
+  border-radius: 4px;
 }
 
 .hero-section h1 {
