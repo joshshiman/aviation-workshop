@@ -278,20 +278,17 @@
   <script>
     // Add copy buttons to all code blocks
     document.addEventListener('DOMContentLoaded', function() {
-      // Find all pre elements that contain code
-      var codeBlocks = document.querySelectorAll('pre code, pre');
+      // Find all pre elements (not nested code elements to avoid duplicates)
+      var preBlocks = document.querySelectorAll('pre');
       
-      codeBlocks.forEach(function(block) {
-        // Skip if already wrapped or if it's inside a wrapper
-        if (block.parentElement.classList.contains('code-block-wrapper')) {
+      preBlocks.forEach(function(pre) {
+        // Skip if already processed
+        if (pre.parentElement.classList.contains('code-block-wrapper')) {
           return;
         }
         
-        // Get the actual pre element
-        var pre = block.tagName === 'PRE' ? block : block.parentElement;
-        
-        // Skip if pre is already processed
-        if (pre.querySelector('.copy-button')) {
+        // Skip if already has a copy button
+        if (pre.querySelector('.copy-button') || pre.parentElement.querySelector('.copy-button')) {
           return;
         }
         
@@ -309,7 +306,11 @@
         var button = document.createElement('button');
         button.className = 'copy-button';
         button.setAttribute('aria-label', 'Copy code to clipboard');
-        button.innerHTML = '<span>Copy</span>';
+        
+        // Create button text span (icon is added via CSS ::before)
+        var buttonText = document.createElement('span');
+        buttonText.textContent = 'Copy';
+        button.appendChild(buttonText);
         
         // Add click handler
         button.addEventListener('click', function() {
@@ -321,18 +322,18 @@
           navigator.clipboard.writeText(text).then(function() {
             // Show success state
             button.classList.add('copied');
-            button.innerHTML = '<span>Copied!</span>';
+            buttonText.textContent = 'Copied!';
             
             // Reset after 2 seconds
             setTimeout(function() {
               button.classList.remove('copied');
-              button.innerHTML = '<span>Copy</span>';
+              buttonText.textContent = 'Copy';
             }, 2000);
           }).catch(function(err) {
             console.error('Failed to copy:', err);
-            button.innerHTML = '<span>Failed</span>';
+            buttonText.textContent = 'Failed';
             setTimeout(function() {
-              button.innerHTML = '<span>Copy</span>';
+              buttonText.textContent = 'Copy';
             }, 2000);
           });
         });
