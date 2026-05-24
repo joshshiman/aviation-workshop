@@ -274,5 +274,73 @@
     });
   </script>
   {% endif %}
+  
+  <script>
+    // Add copy buttons to all code blocks
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find all pre elements that contain code
+      var codeBlocks = document.querySelectorAll('pre code, pre');
+      
+      codeBlocks.forEach(function(block) {
+        // Skip if already wrapped or if it's inside a wrapper
+        if (block.parentElement.classList.contains('code-block-wrapper')) {
+          return;
+        }
+        
+        // Get the actual pre element
+        var pre = block.tagName === 'PRE' ? block : block.parentElement;
+        
+        // Skip if pre is already processed
+        if (pre.querySelector('.copy-button')) {
+          return;
+        }
+        
+        // Create wrapper
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        
+        // Insert wrapper before pre
+        pre.parentNode.insertBefore(wrapper, pre);
+        
+        // Move pre into wrapper
+        wrapper.appendChild(pre);
+        
+        // Create copy button
+        var button = document.createElement('button');
+        button.className = 'copy-button';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+        button.innerHTML = '<span>Copy</span>';
+        
+        // Add click handler
+        button.addEventListener('click', function() {
+          // Get the code content
+          var code = pre.querySelector('code') || pre;
+          var text = code.textContent || code.innerText;
+          
+          // Copy to clipboard
+          navigator.clipboard.writeText(text).then(function() {
+            // Show success state
+            button.classList.add('copied');
+            button.innerHTML = '<span>Copied!</span>';
+            
+            // Reset after 2 seconds
+            setTimeout(function() {
+              button.classList.remove('copied');
+              button.innerHTML = '<span>Copy</span>';
+            }, 2000);
+          }).catch(function(err) {
+            console.error('Failed to copy:', err);
+            button.innerHTML = '<span>Failed</span>';
+            setTimeout(function() {
+              button.innerHTML = '<span>Copy</span>';
+            }, 2000);
+          });
+        });
+        
+        // Add button to wrapper
+        wrapper.appendChild(button);
+      });
+    });
+  </script>
 </body>
 </html>
