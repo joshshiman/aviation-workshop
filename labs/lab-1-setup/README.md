@@ -186,6 +186,8 @@ You're now in a Red Hat Enterprise Linux (RHEL) desktop environment. Here are th
 - Or press the **Super key** (Windows key / Command key)
 - Search for applications by typing their name
 
+![RHEL Activities Menu](images/rhel-activities.png)
+
 **Common Applications:**
 - **Firefox** - Web browser (pre-installed)
 - **Terminal** - Command line interface
@@ -205,27 +207,91 @@ Now you'll set up Bob IDE, your AI-powered development environment.
 
 3. Click on the **Bob IDE** application to launch it
 
-4. Bob will open with a login panel on the right side
+#### Handle Initial Prompts
+
+When Bob IDE first opens, you may see a keyring password prompt:
+
+![Keyring Password Prompt](images/keyring.png)
+
+**Action Items:**
+1. Click **"Cancel"** on the keyring prompt
+2. If it appears again, click **"Cancel"** a second time
+3. This will dismiss the keyring dialog
+
+Next, you'll see the Bob welcome screen:
+
+![Bob Welcome Screen](images/bob-welcome-splash.png)
+
+**Action Items:**
+1. Click **"Skip for now"** to dismiss the welcome message
+2. You'll now see the main Bob IDE interface
 
 #### Authenticate with IBM ID
+
+You should now see the Bob login panel on the right side:
+
+![Bob Login Panel](images/bob-login.png)
+
+**Action Items:**
 
 1. In Bob's right-hand panel, click **"Sign in"** or **"Authenticate"**
 
 2. Bob will open a link in **Firefox** (the default browser in the VM)
 
-3. On the IBM login page, enter your **IBM ID credentials**:
-   - Email: Your work email (the one you used to create your IBM ID)
-   - Password: Your IBM ID password
+3. On the IBM login page, enter your **IBM ID email address** (your work email)
 
-4. Complete any two-factor authentication if prompted
+4. You'll be prompted to select an authentication method:
 
-5. After successful login, you'll see a prompt: **"Open in Bob?"**
+![Bob Authentication Methods](images/bob-authentication.png)
 
-6. Click **"Open in Bob"** or **"Allow"**
+5. **Choose your authentication method:**
 
-7. You'll be redirected back to Bob IDE, now authenticated
+   **Option A: w3id Password (Recommended for VM)**
+   - Select **"w3id password"**
+   - Enter your IBM ID password
+   - Click **"Sign in"**
+
+   **Option B: IBM Verify Mobile App**
+   - Select **"IBM Verify"**
+   - Approve the authentication request on your mobile device
+   - If you don't have IBM Verify set up, see the setup instructions below
+
+   > ⚠️ **Important:** Do NOT select "Passkey" - it will not work inside the VM environment.
+
+6. After successful authentication, Firefox will show a prompt: **"Open in Bob?"**
+
+7. Click **"Open in Bob"** or **"Allow"**
+
+8. You'll be redirected back to Bob IDE, now authenticated
 
 **Expected Result:** Bob IDE is now authenticated and ready to use!
+
+---
+
+<details>
+<summary><b>Setting Up IBM Verify (Optional)</b></summary>
+
+If you want to use the IBM Verify mobile app for authentication:
+
+1. Log in to **[www.ibm.com](https://www.ibm.com)** with your IBM ID credentials
+
+2. Click on your **Profile** in the top-right corner
+
+3. Navigate to **ID and password** → **TOTP** (Time-based One-Time Password)
+
+4. Follow the on-screen instructions to set up TOTP
+
+5. Download **IBM Verify** app on your smartphone or tablet:
+   - **iOS:** [App Store](https://apps.apple.com/app/ibm-verify/id1162190392)
+   - **Android:** [Google Play](https://play.google.com/store/apps/details?id=com.ibm.security.verifyapp)
+
+6. Scan the QR code shown on the IBM website with the IBM Verify app
+
+7. Your device is now registered for two-factor authentication
+
+</details>
+
+---
 
 > 💡 **Tip:** If the browser doesn't open automatically, look for a URL in Bob's output panel and copy it to Firefox manually.
 
@@ -250,22 +316,35 @@ Now that Bob is authenticated, you'll download the workshop materials.
 
 4. You'll see the workshop materials:
    - Workshop repository (ZIP file)
-   - Confluent Kafka API credentials (text file)
+   - **kafka-credentials.md** (Markdown file) - Keep this tab open!
    - One-pager documentation (PDF)
 
-#### Download and Extract Materials
+#### Download and Extract Workshop Repository
 
 1. **Download the workshop repository ZIP file** to your VM
 
-2. **Download the Kafka credentials file** - you'll need this soon
+2. Once downloaded, open the **Files** application (Activities → Files)
 
-3. Once downloaded, open the **Files** application (Activities → Files)
+3. Navigate to **Downloads** folder
 
-4. Navigate to **Downloads** folder
+4. **Right-click** on the workshop ZIP file → **"Extract Here"**
 
-5. **Right-click** on the workshop ZIP file → **"Extract Here"**
+5. You should now see an extracted workshop folder
 
-6. You should now see an extracted workshop folder
+#### Preview Kafka Credentials (Keep for Later)
+
+**Important:** Keep the Box folder tab open in Firefox - you'll need to copy the Kafka credentials in Part 4.
+
+1. In the Box folder, click on the **"kafka-credentials.md"** file
+
+2. The markdown file will open in Box's web viewer showing:
+   - `KAFKA_BOOTSTRAP_SERVERS`
+   - `KAFKA_SASL_USERNAME`
+   - `KAFKA_SASL_PASSWORD`
+
+3. **Keep this tab open** - you'll copy these values directly into your `.env` file later
+
+> 💡 **Tip:** Don't worry about copying the credentials now. We'll walk through exactly where to paste them in Part 4 when you configure your environment.
 
 ---
 
@@ -282,11 +361,34 @@ Now you'll open the workshop project in Bob IDE (similar to VS Code).
 
 3. Navigate to your **Downloads** folder
 
-4. Select the **extracted workshop folder**
+4. Select the **extracted workshop folder** (e.g., `bobathon-agentic-aviation-weather-warning-application-main`)
 
 5. Click **"Open"** or **"Select Folder"**
 
-**Expected Result:** The workshop project is now open in Bob IDE with the file explorer visible on the left side.
+#### Trust the Workspace
+
+After opening the folder, Bob IDE will show a security prompt:
+
+**"Do you trust the authors of the files in this folder?"**
+
+```
+IBM Bob provides features that may automatically execute files in this folder.
+
+If you don't trust the authors of these files, we recommend to continue
+in restricted mode as the files may be malicious.
+
+~/Downloads/bobathon-agentic-aviation-weather-warning-application-main
+```
+
+**Action Items:**
+
+1. Check the box that says **"Trust the authors of all files in the parent folder 'Downloads'"**
+
+2. Click **"Yes, I trust the authors"**
+
+> ✅ **Why this is safe:** You downloaded these files from the official workshop Box folder, so they are trusted workshop materials.
+
+**Expected Result:** The workshop project is now open in Bob IDE with full functionality and the file explorer visible on the left side.
 
 > 💡 **Tip:** You can also drag and drop the folder from Files into Bob IDE to open it.
 
@@ -351,7 +453,7 @@ Once logged into IBM Cloud:
 
 In your Bob IDE window:
 
-1. Click the **three dots (⋮)** in the top-right corner of Bob IDE
+1. Click the **three dots (⋮)** in the top-left corner of Bob IDE
 2. Select **"Terminal"** from the dropdown menu
 3. Click **"New Terminal"**
    - Alternative: Use keyboard shortcut `Ctrl+Shift+` (backtick)
@@ -360,17 +462,38 @@ In your Bob IDE window:
 
 **Expected Result:** You should see a bash terminal prompt in the RHEL VM.
 
-### Step 2: Check Python Version
+### Step 2: Install Python 3.11
 
-The RHEL VM comes with Python pre-installed. Verify the version:
+The RHEL VM comes with Python 3.9 by default, but we need Python 3.11 for the workshop.
+
+#### Check Current Python Version
 
 ```bash
 python3 --version
 ```
 
-**Expected Output:** Python 3.11.x (or compatible version)
+**Expected Output:** `Python 3.9.x`
 
-> 💡 **Note:** The VM is pre-configured with Python 3.11 for the workshop.
+#### Install Python 3.11
+
+Run the following commands to install Python 3.11:
+
+```bash
+# Install Python 3.11 from RHEL repositories
+sudo dnf install -y python3.11 python3.11-pip
+```
+
+> 💡 **Note:** You may be prompted for the sudo password. If so, ask your instructor for the VM password.
+
+#### Verify Python 3.11 Installation
+
+```bash
+python3.11 --version
+```
+
+**Expected Output:** `Python 3.11.x`
+
+> ✅ **Success!** Python 3.11 is now installed and ready to use.
 
 ### Step 3: Navigate to Workshop Directory
 
@@ -384,10 +507,10 @@ cd ~/Downloads/bobathon-agentic-aviation-weather-warning-application/workshop
 
 ### Step 4: Create Virtual Environment
 
-Create an isolated Python environment for the workshop:
+Create an isolated Python environment for the workshop using Python 3.11:
 
 ```bash
-python3 -m venv venv
+python3.11 -m venv venv
 ```
 
 > 💡 **What is a virtual environment?** It keeps your workshop dependencies separate from your system Python, preventing conflicts.
@@ -448,44 +571,128 @@ source venv/bin/activate
 
 ### Step 1: Create Environment File
 
-Copy the example environment file:
+In Bob IDE's terminal, check if `.env` already exists, then create it from the example:
 
 ```bash
+# Check if .env already exists (to avoid overwriting your work)
+ls -la .env
+
+# If .env doesn't exist, create it from the example
 cp .env.example .env
 ```
 
-### Step 3: Edit Configuration
+> ⚠️ **Important:** If you see `.env` already exists, **DO NOT run the `cp` command** - it will overwrite your credentials! Skip to Step 2 to edit your existing file.
 
-Open `.env` in your text editor and fill in your credentials:
+**Expected Output:**
+- If `.env` doesn't exist: `ls: cannot access '.env': No such file or directory` → Safe to run `cp` command
+- If `.env` exists: Shows file details → **Skip the `cp` command** and go to Step 2
+
+### Step 2: Open .env File in Bob IDE
+
+1. In Bob IDE's file explorer (left sidebar), navigate to the `workshop` folder
+
+2. Click on the `.env` file to open it in the editor
+
+3. You'll see the template with placeholder values
+
+### Step 3: Fill in Kafka Credentials from Box
+
+Now you'll copy the Kafka credentials from the markdown file you kept open earlier.
+
+**Action Items:**
+
+1. Switch to **Firefox** and go back to the Box folder tab
+
+2. Open the **"kafka-credentials.md"** file if not already open
+
+3. In the markdown file viewer, you'll see three credential values
+
+> ⚠️ **Important:** Copy each value **individually** (one at a time) to preserve formatting. Don't copy all three at once!
+
+#### Copy Each Credential Individually:
+
+**Step A: Copy KAFKA_BOOTSTRAP_SERVERS**
+1. In Box markdown viewer: **Select only the bootstrap server value** (e.g., `pkc-xxxxx.us-east-1.aws.confluent.cloud:9092`)
+   - Don't include the variable name, just the value
+2. Copy it: `Ctrl+C`
+3. Switch to Bob IDE
+4. Find the line `KAFKA_BOOTSTRAP_SERVERS=your-cluster.confluent.cloud:9092`
+5. Select and replace `your-cluster.confluent.cloud:9092` with your copied value
+6. Paste: `Ctrl+V`
+7. Verify the port number `:9092` is at the end
+
+**Step B: Copy KAFKA_SASL_USERNAME**
+1. Switch back to Firefox
+2. In Box markdown viewer: **Select only the username/API key value**
+   - Don't include the variable name, just the value
+3. Copy it: `Ctrl+C`
+4. Switch to Bob IDE
+5. Find the line `KAFKA_SASL_USERNAME=your-api-key`
+6. Select and replace `your-api-key` with your copied value
+7. Paste: `Ctrl+V`
+
+**Step C: Copy KAFKA_SASL_PASSWORD**
+1. Switch back to Firefox
+2. In Box markdown viewer: **Select only the password/API secret value**
+   - Don't include the variable name, just the value
+3. Copy it: `Ctrl+C`
+4. Switch to Bob IDE
+5. Find the line `KAFKA_SASL_PASSWORD=your-api-secret`
+6. Select and replace `your-api-secret` with your copied value
+7. Paste: `Ctrl+V`
+
+> 💡 **Tip:** Make sure there are no extra spaces before or after the values! Each value should be on its own line in the .env file.
+
+### Step 4: Fill in watsonx Orchestrate Credentials
+
+Now add your watsonx Orchestrate credentials from IBM Cloud (Part 2).
+
+**Action Items:**
+
+1. Find the line `ORCHESTRATE_API_URL=https://your-instance.watson-orchestrate.ibm.com`
+
+2. Replace with your watsonx Orchestrate API URL from IBM Cloud
+
+3. Find the line `ORCHESTRATE_API_KEY=your-orchestrate-api-key`
+
+4. Replace with your watsonx Orchestrate API Key from IBM Cloud
+
+### Step 5: Save the .env File
+
+1. In Bob IDE, press `Ctrl+S` to save the `.env` file
+
+2. Verify all credentials are filled in (no placeholder text remaining)
+
+**Your .env file should now look like this (with your actual values):**
 
 ```bash
-# Confluent Kafka Configuration (from Box folder)
-KAFKA_BOOTSTRAP_SERVERS=your-cluster.confluent.cloud:9092
-KAFKA_SASL_USERNAME=your-api-key
-KAFKA_SASL_PASSWORD=your-api-secret
+# Confluent Kafka Configuration
+KAFKA_BOOTSTRAP_SERVERS=pkc-xxxxx.us-east-1.aws.confluent.cloud:9092
+KAFKA_SASL_USERNAME=ABCDEFGHIJKLMNOP
+KAFKA_SASL_PASSWORD=long-secret-string-here
 
-# Kafka Topics (already configured)
+# Kafka Topics (already configured - don't change)
 WEATHER_TOPIC=weather_events
 FLIGHT_TOPIC=flight_telemetry
 
-# watsonx Orchestrate Configuration (from IBM Cloud)
-ORCHESTRATE_API_URL=https://your-instance.watson-orchestrate.ibm.com
-ORCHESTRATE_API_KEY=your-orchestrate-api-key
+# watsonx Orchestrate Configuration
+ORCHESTRATE_API_URL=https://us-south.ml.cloud.ibm.com/ml/v1/...
+ORCHESTRATE_API_KEY=abc123xyz...
 
 # API Configuration (leave as-is)
 API_HOST=0.0.0.0
 API_PORT=8000
 ```
 
-**Where to find each value:**
+**Credential Reference Table:**
 
-| Variable | Source | Example |
-|----------|--------|---------|
-| `KAFKA_BOOTSTRAP_SERVERS` | Box folder - Kafka credentials file | `pkc-xxxxx.us-east-1.aws.confluent.cloud:9092` |
-| `KAFKA_SASL_USERNAME` | Box folder - Kafka credentials file | `ABCDEFGHIJKLMNOP` |
-| `KAFKA_SASL_PASSWORD` | Box folder - Kafka credentials file | `long-secret-string` |
-| `ORCHESTRATE_API_URL` | IBM Cloud - watsonx Orchestrate details | `https://us-south.ml.cloud.ibm.com/...` |
-| `ORCHESTRATE_API_KEY` | IBM Cloud - watsonx Orchestrate details | `abc123xyz...` |
+| Variable | Source | Example Format |
+|----------|--------|----------------|
+| `KAFKA_BOOTSTRAP_SERVERS` | Box - kafka-credentials.md | `pkc-xxxxx.region.aws.confluent.cloud:9092` |
+| `KAFKA_SASL_USERNAME` | Box - kafka-credentials.md | `ABCDEFGHIJKLMNOP` |
+| `KAFKA_SASL_PASSWORD` | Box - kafka-credentials.md | `long-secret-string` |
+| `ORCHESTRATE_API_URL` | IBM Cloud - watsonx Orchestrate | `https://us-south.ml.cloud.ibm.com/...` |
+| `ORCHESTRATE_API_KEY` | IBM Cloud - watsonx Orchestrate | `abc123xyz...` |
 
 ### Step 2: Install Python Dependencies
 

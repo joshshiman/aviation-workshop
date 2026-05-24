@@ -77,7 +77,43 @@ Kafka is streaming two types of real-time events:
 
 Open IBM Bob (your agentic IDE) in VS Code.
 
-### Step 2: Use Bob to Create the Consumer
+### Step 2: Select Bob's Code Mode
+
+Before giving Bob instructions, you need to select the appropriate mode:
+
+1. Look at the **bottom of Bob's chat panel** for the mode selector
+
+2. Click on the current mode (it may show "Ask", "Plan", "Code", "Advanced", or "Orchestrator")
+
+3. Select **💻 Code** mode from the dropdown
+
+> 💡 **Why Code Mode?** This mode is optimized for creating and editing files, making it perfect for generating the consumer.py file.
+
+**Available Bob Modes:**
+- **💬 Ask** - For questions and explanations
+- **📋 Plan** - For breaking down complex tasks
+- **💻 Code** - For creating and editing code files (use this one!)
+- **🔧 Advanced** - For using MCP tools and advanced features
+- **🎯 Orchestrator** - For coordinating multiple agents
+
+### Step 3: Understanding Bob's Approval Process
+
+Bob requires your approval before making changes to files. This is a safety feature.
+
+**What to expect:**
+1. After you give Bob instructions, he will analyze the task
+2. Bob will propose the changes he wants to make
+3. You'll see an **approval prompt** asking you to review and approve
+4. Click **"Approve"** or **"Accept"** to let Bob create the file
+
+> 💡 **Note:** Auto-approve is disabled by default for safety. You must manually approve each action Bob takes.
+
+**Why this is helpful:**
+- ✅ You review changes before they're applied
+- ✅ Prevents accidental overwrites
+- ✅ Gives you control over your code
+
+### Step 4: Use Bob to Create the Consumer
 
 Copy and paste this prompt into Bob's chat:
 
@@ -121,9 +157,11 @@ IMPORTANT: Use the iterator pattern (for message in consumer:) NOT poll(). This 
 Use clear formatting with emojis (🌤️ for weather, ✈️ for flights) and proper spacing between events.
 ```
 
-> 💡 **Tip:** Bob will generate the code for you! Review it to make sure it matches the requirements.
+> 💡 **Tip:** Bob will generate the code for you! Review it and click **Approve** to create the file.
 
-### Step 3: Review Bob's Generated Code
+### Step 5: Review Bob's Generated Code
+
+After you approve, Bob will create the file. Review it to ensure it matches the requirements.
 
 Bob should create a file similar to this structure:
 

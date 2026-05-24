@@ -117,12 +117,25 @@ Create a file called weather_tool.py in the workshop/agents directory with the f
 
 ### Step 3: Test Your Weather Tool
 
-Run the tool locally to verify it works:
+Run the tool locally to verify it works.
+
+**If you're still in the `workshop/backend` directory from Lab 2:**
 
 ```bash
-cd workshop/agents
+# Navigate up one level, then into agents
+cd ..
+cd agents
 python weather_tool.py
 ```
+
+**If you're already in the `workshop` directory:**
+
+```bash
+cd agents
+python weather_tool.py
+```
+
+> 💡 **Tip:** You can check your current directory with `pwd` (Linux/Mac) or `cd` (Windows)
 
 **Expected Output:**
 ```
@@ -205,12 +218,25 @@ Create a file called flight_tool.py in the workshop/agents directory with the fo
 
 ### Step 2: Test Your Flight Risk Tool
 
-Run the tool locally:
+Run the tool locally.
+
+**If you're in the `workshop/backend` directory:**
 
 ```bash
-cd workshop/agents
+# Navigate up one level, then into agents
+cd ..
+cd agents
 python flight_tool.py
 ```
+
+**If you're already in the `workshop/agents` directory from testing the weather tool:**
+
+```bash
+# You're already in the right place!
+python flight_tool.py
+```
+
+> 💡 **Tip:** After testing the weather tool, you should already be in `workshop/agents`
 
 **Expected Output:**
 ```
@@ -232,20 +258,50 @@ Reasoning: Critical risk: AC123 is 25.0km from High severity weather. Immediate 
 
 ### Step 1: Configure Orchestrate Environment
 
-First, add your watsonx Orchestrate environment to the CLI:
+First, add your watsonx Orchestrate environment to the CLI.
+
+#### Prepare Your Credentials
+
+Before running the command, open your `.env` file in Bob IDE to have your credentials ready:
+
+1. In Bob IDE's file explorer, navigate to `workshop/.env`
+2. Click to open the file
+3. Find your `ORCHESTRATE_API_URL` and `ORCHESTRATE_API_KEY`
+4. Keep this file open for easy copying
+
+> 💡 **Tip:** You'll copy from the `.env` file and paste into the terminal using `Ctrl+Shift+V`
+
+#### Add the Environment
+
+Run this command in your terminal:
 
 ```bash
 orchestrate env add -n aviation-workshop -u <your-service-instance-url>
 ```
 
-Replace `<your-service-instance-url>` with your `ORCHESTRATE_API_URL` from Lab 1.
+**Action Items:**
 
-You'll be prompted to enter your API key (from Lab 1, your `ORCHESTRATE_API_KEY`).
+1. Replace `<your-service-instance-url>` with your `ORCHESTRATE_API_URL` from the `.env` file
+   - Copy the URL from `.env`: `Ctrl+C`
+   - Paste in terminal: `Ctrl+Shift+V`
+
+2. Press Enter
+
+3. You'll see a prompt: **"Please enter your WxO API key:"**
+
+4. Copy your `ORCHESTRATE_API_KEY` from the `.env` file: `Ctrl+C`
+
+5. Paste it in the terminal: `Ctrl+Shift+V`
+
+6. Press Enter
 
 **Expected Output:**
 ```
+Please enter your WxO API key: [your key will be hidden]
 Environment 'aviation-workshop' added successfully
 ```
+
+> 🔒 **Security Note:** Your API key won't be visible when you paste it - this is normal and expected for security.
 
 ### Step 2: Activate the Environment
 
@@ -311,13 +367,40 @@ You should see both tools in the list:
 
 ## Part 5: Create a Supervisor Agent
 
-### What Is an Agent?
+### What Is a Supervisor Agent?
 
-An agent is a configuration that:
-- Has access to specific tools
-- Uses an LLM to decide which tools to call
-- Can reason about complex problems
-- Provides intelligent responses
+A supervisor agent is an AI-powered coordinator that:
+- **Has access to specific tools** - In our case, weather analysis and flight risk assessment
+- **Uses an LLM to decide which tools to call** - Intelligently determines when to analyze weather vs. assess flight risk
+- **Can reason about complex problems** - Correlates data from multiple sources
+- **Provides intelligent responses** - Synthesizes information into actionable recommendations
+
+### How the Aviation Supervisor Works
+
+The Aviation Safety Supervisor agent acts as an intelligent coordinator that:
+
+1. **Receives input** about weather conditions and flight positions
+2. **Analyzes weather severity** using the `analyze_weather_severity` tool
+3. **Assesses flight risk** using the `assess_flight_risk` tool by calculating proximity to hazards
+4. **Correlates the data** - Combines weather severity with flight proximity to understand the complete picture
+5. **Provides recommendations** - Synthesizes both analyses into clear, actionable safety guidance
+
+**Example Workflow:**
+```
+User Query: "Thunderstorm near Toronto, Flight AC123 is 25km away"
+    ↓
+Agent calls analyze_weather_severity
+    → Returns: "Critical risk, reduced visibility, strong winds"
+    ↓
+Agent calls assess_flight_risk
+    → Returns: "Risk score 9.0/10, recommend divert"
+    ↓
+Agent synthesizes both results
+    → "Critical situation: Flight AC123 should divert immediately due to
+       severe weather conditions and close proximity to hazard"
+```
+
+This correlation of real-time weather data with flight telemetry is what makes the system intelligent and actionable!
 
 ### Create Agent Configuration with Bob
 
@@ -365,15 +448,65 @@ orchestrate agents import -f supervisor_agent.yaml
 
 ---
 
-## Testing Your Tools (Bonus)
+## Testing Your Agent in Orchestrate UI (Bonus)
 
-### Test in Orchestrate UI
+Now let's test your agent in the watsonx Orchestrate web interface!
 
-1. Go to your watsonx Orchestrate instance
-2. Navigate to the Agents section
-3. Find your `aviation_supervisor` agent
-4. Click "Test" or "Chat"
-5. Try a query like:
+### Step 1: Access IBM Cloud
+
+1. Open **Firefox** in your VM (or your local browser if running locally)
+
+2. Navigate to **IBM Cloud**: [https://cloud.ibm.com](https://cloud.ibm.com)
+
+3. Log in with your IBM ID credentials
+
+4. Click the **hamburger menu (☰)** in the top-left corner
+
+5. Select **"Resource list"**
+
+### Step 2: Launch watsonx Orchestrate
+
+You'll see your watsonx Orchestrate instance in the resource list:
+
+![Orchestrate Launch](image/orchestrate-launch.png)
+
+**Action Items:**
+
+1. Find **"watsonx Orchestrate"** in your resource list
+
+2. Click on the instance name
+
+3. Click **"Launch watsonx Orchestrate"** button
+
+### Step 3: Navigate to Agents
+
+After launching, you'll see the watsonx Orchestrate main page:
+
+![Orchestrate Main Page](image/orchestrate-main.png)
+
+**Action Items:**
+
+1. Look at the **bottom-left corner** of the page
+
+2. Click **"Manage agents"**
+
+### Step 4: Find Your Agent
+
+You'll now see the Agents management page:
+
+![Orchestrate Agents Page](image/orchestrate-agents.png)
+
+**Action Items:**
+
+1. Look for your **"Aviation Safety Supervisor"** agent in the list
+
+2. Click on the agent name to open it
+
+### Step 5: Chat with Your Agent
+
+Once you open the agent, you'll see a chat interface.
+
+**Try this test query:**
 
 ```
 Analyze this situation:
@@ -383,10 +516,27 @@ Analyze this situation:
 What should we do?
 ```
 
+**What to expect:**
+
 The agent should:
-1. Call `analyze_weather_severity` tool
-2. Call `assess_flight_risk` tool
-3. Provide a comprehensive recommendation
+1. ✅ Call the `analyze_weather_severity` tool
+2. ✅ Call the `assess_flight_risk` tool
+3. ✅ Provide a comprehensive safety recommendation
+4. ✅ Suggest specific actions (e.g., divert, monitor, delay)
+
+**Example Response:**
+
+The agent might say something like:
+
+> "Based on my analysis:
+>
+> **Weather Analysis:** The thunderstorm presents critical risk with severely reduced visibility (2km) and strong winds (55km/h).
+>
+> **Flight Risk Assessment:** Flight AC123 is at high risk being only 25km from the hazard. Risk score: 9.0/10.
+>
+> **Recommendation:** Immediate diversion is recommended. The flight is too close to critical weather conditions. Consider alternate routes and monitor conditions closely."
+
+> 💡 **Tip:** You can see which tools the agent called by looking at the conversation - Orchestrate shows tool invocations in the chat.
 
 ---
 

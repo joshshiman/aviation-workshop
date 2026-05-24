@@ -59,23 +59,54 @@ The dashboard will:
 
 ### Step 1: Navigate to the Workshop Directory
 
-In Bob IDE's integrated terminal, move into the `workshop` folder and stay there for the rest of this lab unless a step says otherwise:
+In Bob IDE's integrated terminal, navigate to the `workshop` folder.
+
+**If you're coming from Lab 3 (in `workshop/agents` directory):**
 
 ```bash
+# Navigate up one level to workshop
+cd ..
+```
+
+**If you're in a different directory:**
+
+```bash
+# Navigate to workshop from repository root
 cd workshop
 ```
 
-> 💡 **Reminder:** Open a terminal in Bob IDE: Click the **three dots (⋮)** → **Terminal** → **New Terminal** (or use `Ctrl+Shift+` backtick)
+**Verify you're in the right place:**
 
-> 💡 **Working directory tip:** Each new terminal may start in the repository root. If a command below does not work, first run `cd workshop`.
+```bash
+pwd
+# Should show: .../workshop
+```
+
+> 💡 **Reminder:** Open a terminal in Bob IDE: Click the **three dots (⋮)** in the top-left → **Terminal** → **New Terminal** (or use `Ctrl+Shift+` backtick)
+
+> 💡 **Working directory tip:** Stay in the `workshop` folder for the rest of this lab unless a step says otherwise.
 
 ### Terminal Setup for This Lab
 
-Use separate terminals so you do not need to stop and restart commands:
+You'll need one terminal to run the backend API server:
 
 - **Terminal 1:** Run the backend API with `python backend/api_server.py`
-- **Terminal 2:** Open the static dashboard page with `open dashboard/index.html`
-- **Optional Terminal 3:** Test API endpoints with `curl`
+
+**To open the dashboard:**
+
+You'll open the HTML file directly using the file manager (no second terminal needed):
+
+1. In Bob IDE's file explorer (left sidebar), navigate to `workshop/dashboard/`
+
+2. **Right-click** on `index.html`
+
+3. Select **"Reveal in File Explorer"** or **"Open Containing Folder"**
+
+4. The RHEL file manager will open showing the dashboard folder
+
+5. **Double-click** `index.html` to open it in Firefox
+
+> 💡 **Tip:** This is simpler than using terminal commands and ensures the file opens correctly in Firefox!
 
 You should see:
 - `dashboard/index.html` - ✅ **Prebuilt HTML structure** (already exists)
@@ -91,53 +122,10 @@ The dashboard uses **IBM Carbon Design System** styling for a professional, ente
 - `index.html` - HTML structure with IBM Plex Sans font, Leaflet map container, alerts section
 - `style.css` - Carbon-inspired styles (colors, spacing, typography, alert cards)
 
-Open `dashboard/index.html` to see the structure:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Aviation Warning Dashboard</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>✈️ Aviation Warning Dashboard</h1>
-            <div class="status">
-                <span id="connection-status">●</span>
-                <span id="status-text">Connecting...</span>
-            </div>
-        </header>
-
-        <div class="main-content">
-            <!-- Map Section -->
-            <div class="map-section">
-                <div id="map"></div>
-            </div>
-
-            <!-- Alerts Section -->
-            <div class="alerts-section">
-                <h2>Active Alerts</h2>
-                <div id="alerts-container">
-                    <p class="no-alerts">No active alerts</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
-```
-
-**Key Elements:**
-- `#map` - Leaflet map container
-- `#alerts-container` - Alert cards display area
-- `#connection-status` - Connection indicator
+**What's included:**
+- Map container for displaying flights and weather
+- Alerts section for showing warnings
+- Connection status indicator
 - IBM Plex Sans font (Carbon's official typeface)
 - Leaflet CSS/JS loaded from CDN
 
@@ -148,75 +136,49 @@ Open `dashboard/index.html` to see the structure:
 - **Notifications**: Color-coded alerts (red/orange/yellow/green)
 - **Interactive elements**: Hover states with Carbon's motion curves
 
+> 💡 **Tip:** Open `dashboard/index.html` in Bob IDE to see the structure. You don't need to modify it!
+
 ---
 
 ## Part 2: Create Backend API (15 min)
 
 Before opening the dashboard page, we need a simple API that serves the latest flight, hazard, and alert data.
 
-### Step 1: Create Flask API Server
+### Step 1: Create Flask API Server with Bob
 
-Create `workshop/backend/api_server.py`:
+Use Bob to create `workshop/backend/api_server.py`:
 
 **🤖 Bob Prompt:**
 ```
-Create a Flask API server that:
-1. Stores the latest 50 flight and weather events in memory
-2. Provides these endpoints:
-   - GET /api/flights - Returns list of active flights
-   - GET /api/weather - Returns list of weather hazards
-   - GET /api/alerts - Returns list of proximity alerts
-3. Runs on port 8000 with CORS enabled (configurable via API_PORT environment variable)
-4. Updates data in a background thread using your existing backend event-processing logic
+Create a file called api_server.py in the workshop/backend directory with the following:
 
-Use the data schemas from instructor/DATA_SCHEMA.md.
-Include proper error handling and logging.
+1. Import Flask, jsonify, CORS from flask_cors, threading, deque from collections, logging, os, and dotenv.load_dotenv
+2. Load environment variables at module level
+3. Create Flask app with CORS enabled
+4. Create in-memory storage using deque:
+   - flights: maxlen=50
+   - weather_events: maxlen=50
+   - alerts: maxlen=20
+5. Create a consume_kafka() function that:
+   - Runs your Kafka consumer from Lab 2
+   - Stores flight events in the flights deque
+   - Stores weather events in the weather_events deque
+   - Calculates proximity alerts when flights are within 50km of weather hazards
+   - Stores alerts in the alerts deque
+6. Create three API endpoints:
+   - GET /api/flights - Returns list(flights) as JSON
+   - GET /api/weather - Returns list(weather_events) as JSON
+   - GET /api/alerts - Returns list(alerts) as JSON
+7. Create a GET /api/health endpoint that returns {"status": "ok"}
+8. In main block:
+   - Start consume_kafka in a daemon thread
+   - Get API_PORT from environment (default: 8000)
+   - Run Flask app on 0.0.0.0 with the configured port
+
+Include proper error handling and logging for all endpoints.
 ```
 
-**Expected File Structure:**
-```python
-from flask import Flask, jsonify
-from flask_cors import CORS
-from consumer import KafkaConsumer
-import threading
-from collections import deque
-import logging
-
-app = Flask(__name__)
-CORS(app)
-
-# In-memory storage
-flights = deque(maxlen=50)
-weather_events = deque(maxlen=50)
-alerts = deque(maxlen=20)
-
-# Kafka consumer thread
-def consume_kafka():
-    # Your consumer logic here
-    pass
-
-@app.route('/api/flights')
-def get_flights():
-    # Return flights as JSON
-    pass
-
-@app.route('/api/weather')
-def get_weather():
-    # Return weather events as JSON
-    pass
-
-@app.route('/api/alerts')
-def get_alerts():
-    # Return alerts as JSON
-    pass
-
-if __name__ == '__main__':
-    # Start Kafka consumer thread
-    consumer_thread = threading.Thread(target=consume_kafka, daemon=True)
-    consumer_thread.start()
-    
-    app.run(host='0.0.0.0', port=8000, debug=True)
-```
+> 💡 **Tip:** Bob will generate the complete Flask API server. Review it and approve to create the file.
 
 ### Step 2: Verify Dependencies
 
@@ -280,163 +242,73 @@ curl http://localhost:8000/api/health
 
 Now create the interactive frontend that visualizes the data.
 
-### Step 1: Initialize the Map
+### Step 1: Create Dashboard JavaScript with Bob
 
-Create `workshop/dashboard/app.js`:
+Use Bob to create `workshop/dashboard/app.js`:
 
 **🤖 Bob Prompt:**
 ```
-Create a JavaScript application for the Aviation Warning Dashboard that:
+Create a file called app.js in the workshop/dashboard directory with the following:
 
-1. Initializes a Leaflet map centered on Canada (lat: 56.1304, lon: -106.3468, zoom: 4)
-2. Uses CartoDB Dark Matter tiles for dark mode
-3. Fetches data from these endpoints every 3 seconds:
-   - http://localhost:8000/api/flights
-   - http://localhost:8000/api/weather
-   - http://localhost:8000/api/alerts
-   (Note: Default port is 8000, or use the port specified in your API_PORT environment variable)
-4. Displays flights as airplane emoji markers (✈️) with popups showing:
-   - Flight ID
-   - Altitude
-   - Speed
-   - Status
-5. Displays weather hazards as colored circles:
-   - Red for High severity
-   - Orange for Medium severity
-   - Yellow for Low severity
-   - Radius based on hazard_radius_km
-6. Shows alerts in the #alerts-container as cards with:
-   - Severity badge (color-coded)
-   - Flight ID
-   - Weather condition
-   - Distance
-   - Timestamp
-7. Updates connection status indicator:
-   - Green dot when connected
-   - Red dot when disconnected
-8. Clears old markers before adding new ones to prevent duplicates
+1. Create global variables:
+   - map (for Leaflet map instance)
+   - flightMarkers array (to track flight markers)
+   - weatherMarkers array (to track weather markers)
 
-Use vanilla JavaScript (no frameworks).
-Include proper error handling and console logging.
+2. Create initMap() function that:
+   - Initializes Leaflet map with id 'map'
+   - Centers on Canada: latitude 56.1304, longitude -106.3468, zoom level 4
+   - Uses CartoDB Dark Matter tiles: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+   - Sets attribution and maxZoom: 20
+
+3. Create async fetchData() function that:
+   - Fetches from three endpoints using Promise.all:
+     * http://localhost:8000/api/flights
+     * http://localhost:8000/api/weather
+     * http://localhost:8000/api/alerts
+   - Calls updateFlights(), updateWeather(), updateAlerts() with the data
+   - Calls updateConnectionStatus(true) on success
+   - Catches errors, logs them, and calls updateConnectionStatus(false)
+
+4. Create updateFlights(flights) function that:
+   - Clears old markers from map and empties flightMarkers array
+   - For each flight, creates a Leaflet marker with:
+     * Position: [flight.latitude, flight.longitude]
+     * Custom divIcon with html: '✈️', className: 'flight-marker', iconSize: [30, 30]
+     * Popup showing flight_id, altitude_ft, speed_kmh, status
+   - Adds marker to map and pushes to flightMarkers array
+
+5. Create updateWeather(weatherEvents) function that:
+   - Clears old markers from map and empties weatherMarkers array
+   - For each weather event, creates a Leaflet circle with:
+     * Position: [event.latitude, event.longitude]
+     * Radius: event.hazard_radius_km * 1000 (convert to meters)
+     * Color based on severity: High=red, Medium=orange, Low=yellow
+     * Popup showing city, condition, severity, visibility_km
+   - Adds circle to map and pushes to weatherMarkers array
+
+6. Create updateAlerts(alerts) function that:
+   - Gets element with id 'alerts-container'
+   - If no alerts, shows "No active alerts" message
+   - Otherwise, creates HTML for each alert with:
+     * div with class 'alert-card' and severity class (lowercase)
+     * Alert header with severity badge and timestamp
+     * Alert details with flight_id and message
+
+7. Create updateConnectionStatus(connected) function that:
+   - Gets elements with ids 'connection-status' and 'status-text'
+   - If connected: sets green indicator and "Connected" text
+   - If disconnected: sets red indicator and "Disconnected" text
+
+8. Add DOMContentLoaded event listener that:
+   - Calls initMap()
+   - Calls fetchData()
+   - Sets interval to call fetchData() every 3000ms (3 seconds)
+
+Use vanilla JavaScript only. Include error handling and console logging.
 ```
 
-**Expected Code Structure:**
-```javascript
-// Global variables
-let map;
-let flightMarkers = [];
-let weatherMarkers = [];
-
-// Initialize map
-function initMap() {
-    map = L.map('map').setView([56.1304, -106.3468], 4);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap contributors © CARTO',
-        subdomains: 'abcd',
-        maxZoom: 20
-    }).addTo(map);
-}
-
-// Fetch and update data
-async function fetchData() {
-    try {
-        const [flightsRes, weatherRes, alertsRes] = await Promise.all([
-            fetch('http://localhost:8000/api/flights'),
-            fetch('http://localhost:8000/api/weather'),
-            fetch('http://localhost:8000/api/alerts')
-        ]);
-        
-        const flights = await flightsRes.json();
-        const weather = await weatherRes.json();
-        const alerts = await alertsRes.json();
-        
-        updateFlights(flights);
-        updateWeather(weather);
-        updateAlerts(alerts);
-        updateConnectionStatus(true);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        updateConnectionStatus(false);
-    }
-}
-
-// Update flight markers
-function updateFlights(flights) {
-    // Clear old markers
-    flightMarkers.forEach(marker => map.removeLayer(marker));
-    flightMarkers = [];
-    
-    // Add new markers
-    flights.forEach(flight => {
-        const marker = L.marker([flight.latitude, flight.longitude], {
-            icon: L.divIcon({
-                html: '✈️',
-                className: 'flight-marker',
-                iconSize: [30, 30]
-            })
-        });
-        
-        marker.bindPopup(`
-            <strong>${flight.flight_id}</strong><br>
-            Altitude: ${flight.altitude_ft} ft<br>
-            Speed: ${flight.speed_kmh} km/h<br>
-            Status: ${flight.status}
-        `);
-        
-        marker.addTo(map);
-        flightMarkers.push(marker);
-    });
-}
-
-// Update weather markers
-function updateWeather(weatherEvents) {
-    // Similar to updateFlights but with circles
-}
-
-// Update alerts list
-function updateAlerts(alerts) {
-    const container = document.getElementById('alerts-container');
-    
-    if (alerts.length === 0) {
-        container.innerHTML = '<p class="no-alerts">No active alerts</p>';
-        return;
-    }
-    
-    container.innerHTML = alerts.map(alert => `
-        <div class="alert-card ${alert.severity.toLowerCase()}">
-            <div class="alert-header">
-                <span class="alert-severity">${alert.severity}</span>
-                <span class="alert-time">${new Date(alert.timestamp).toLocaleTimeString()}</span>
-            </div>
-            <div class="alert-details">
-                <span class="alert-flight">${alert.flight_id}</span>
-                ${alert.message}
-            </div>
-        </div>
-    `).join('');
-}
-
-// Update connection status
-function updateConnectionStatus(connected) {
-    const indicator = document.getElementById('connection-status');
-    const text = document.getElementById('status-text');
-    
-    if (connected) {
-        indicator.className = 'status-indicator connected';
-        text.textContent = 'Connected';
-    } else {
-        indicator.className = 'status-indicator disconnected';
-        text.textContent = 'Disconnected';
-    }
-}
-
-// Initialize and start polling
-document.addEventListener('DOMContentLoaded', () => {
-    initMap();
-    fetchData();
-    setInterval(fetchData, 3000); // Update every 3 seconds
-});
-```
+> 💡 **Tip:** Bob will generate the complete dashboard JavaScript. Review and approve to create the file.
 
 ### Step 2: Test the Dashboard
 
@@ -445,11 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
    python backend/api_server.py
    ```
 
-2. In Terminal 2, open the static dashboard page in your browser:
-   ```bash
-   open dashboard/index.html
-   # Or on Linux: xdg-open dashboard/index.html
-   ```
+2. Open the dashboard in Firefox:
+   - In Bob IDE's file explorer, navigate to `workshop/dashboard/`
+   - Right-click on `index.html` → **"Reveal in File Explorer"**
+   - Double-click `index.html` in the file manager to open it in Firefox
 
 3. You should see:
    - ✅ Map centered on Canada
@@ -493,10 +364,10 @@ Upgrade the Flask API to support WebSockets using Flask-SocketIO:
    python backend/api_server.py
    ```
 
-3. **Open Dashboard** in Terminal 2:
-   ```bash
-   open dashboard/index.html
-   ```
+3. **Open Dashboard**:
+   - In Bob IDE's file explorer, navigate to `workshop/dashboard/`
+   - Right-click on `index.html` → **"Reveal in File Explorer"**
+   - Double-click `index.html` to open it in Firefox
 
 4. **Verify Functionality**:
    - [ ] Flights appear on map with correct positions
