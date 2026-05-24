@@ -287,36 +287,40 @@ orchestrate env add -n aviation-workshop -u <your-service-instance-url>
 
 2. Press Enter
 
-3. You'll see a prompt: **"Please enter your WxO API key:"**
-
-4. Copy your `ORCHESTRATE_API_KEY` from the `.env` file: `Ctrl+C`
-
-5. Paste it in the terminal: `Ctrl+Shift+V`
-
-6. Press Enter
-
 **Expected Output:**
 ```
-Please enter your WxO API key: [your key will be hidden]
 Environment 'aviation-workshop' added successfully
 ```
 
-> 🔒 **Security Note:** Your API key won't be visible when you paste it - this is normal and expected for security.
-
 ### Step 2: Activate the Environment
 
-Activate your environment so all commands target it:
+Now activate your environment so all commands target it:
 
 ```bash
 orchestrate env activate aviation-workshop
 ```
 
+**After running this command, you'll be prompted for authentication:**
+
+**Action Items:**
+
+1. You'll see a prompt: **"Please enter your WxO API key:"**
+
+2. Copy your `ORCHESTRATE_API_KEY` from the `.env` file: `Ctrl+C`
+
+3. Paste it in the terminal: `Ctrl+Shift+V`
+
+4. Press Enter
+
 **Expected Output:**
 ```
+Please enter your WxO API key: [your key will be hidden]
 Environment 'aviation-workshop' is now active
 ```
 
-> 💡 **Note:** Authentication expires every 2 hours. If you get authentication errors later, just run `orchestrate env activate aviation-workshop` again.
+> 🔒 **Security Note:** Your API key won't be visible when you paste it - this is normal and expected for security.
+
+> 💡 **Note:** Authentication expires every 2 hours. If you get authentication errors later, just run `orchestrate env activate aviation-workshop` again and re-enter your API key.
 
 ### Step 3: Verify Environment
 
