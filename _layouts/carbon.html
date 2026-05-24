@@ -309,11 +309,14 @@
         
         // Create button text span (icon is added via CSS ::before)
         var buttonText = document.createElement('span');
+        buttonText.className = 'copy-button-text';
         buttonText.textContent = 'Copy';
         button.appendChild(buttonText);
         
         // Add click handler
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          
           // Get the code content
           var code = pre.querySelector('code') || pre;
           var text = code.textContent || code.innerText;
@@ -322,17 +325,22 @@
           navigator.clipboard.writeText(text).then(function() {
             // Show success state
             button.classList.add('copied');
+            // Clear and set new text
+            buttonText.innerHTML = '';
             buttonText.textContent = 'Copied!';
             
             // Reset after 2 seconds
             setTimeout(function() {
               button.classList.remove('copied');
+              buttonText.innerHTML = '';
               buttonText.textContent = 'Copy';
             }, 2000);
           }).catch(function(err) {
             console.error('Failed to copy:', err);
+            buttonText.innerHTML = '';
             buttonText.textContent = 'Failed';
             setTimeout(function() {
+              buttonText.innerHTML = '';
               buttonText.textContent = 'Copy';
             }, 2000);
           });
