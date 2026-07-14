@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBM Bobathon — Workshop Tracks</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  /* ===== IBM Carbon Design System v11 tokens (from aviation-workshop carbon-theme.css) ===== */
+  :root{
+    color-scheme: light;
+    --cds-gray-100:#161616; --cds-gray-90:#262626; --cds-gray-80:#393939;
+    --cds-gray-70:#525252;  --cds-gray-60:#6f6f6f; --cds-gray-50:#8d8d8d;
+    --cds-gray-30:#c6c6c6;  --cds-gray-20:#e0e0e0; --cds-gray-10:#f4f4f4;
+    --cds-blue-60:#0f62fe;  --cds-blue-70:#0043ce; --cds-blue-80:#002d9c;
+    --cds-blue-10:#edf5ff;
+    --cds-sp-03:0.5rem; --cds-sp-05:1rem; --cds-sp-06:1.5rem; --cds-sp-07:2rem;
+    --cds-motion:cubic-bezier(0.2,0,0.38,0.9);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{
+    background:var(--cds-gray-20);
+    font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    color:var(--cds-gray-100); line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+
+  .page{
+    width:816px; min-height:1056px; margin:24px auto; background:#fff;
+    box-shadow:0 4px 24px rgba(0,0,0,.18); display:flex; flex-direction:column;
+  }
+
+  /* ---------- Carbon UI Shell header (Gray-100) ---------- */
+  .cds-header{
+    background:var(--cds-gray-100); color:#fff; display:flex; align-items:center;
+    justify-content:space-between; padding:0 var(--cds-sp-07); height:48px;
+    border-bottom:1px solid var(--cds-gray-80); flex-shrink:0;
+  }
+  .cds-header .name{ display:flex; align-items:center; gap:var(--cds-sp-05); font-size:14px; }
+  .cds-header .ibm{ font-weight:700; letter-spacing:.4px; }
+  .cds-header .name .sep{ width:1px; height:20px; background:var(--cds-gray-70); }
+  .cds-header .name .prod{ font-weight:600; }
+  .cds-header .name .prod b{ color:#fff; }
+  .cds-header .tag{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--cds-gray-30); }
+
+  /* ---------- Hero (Carbon blue gradient) ---------- */
+  .hero{
+    background:linear-gradient(135deg,var(--cds-blue-60) 0%,var(--cds-blue-80) 100%);
+    color:#fff; padding:15px var(--cds-sp-07) 13px; flex-shrink:0;
+  }
+  .hero h1{ font-size:28px; font-weight:300; line-height:1.15; letter-spacing:-.3px; }
+  .hero h1 b{ font-weight:600; }
+  .hero .sub{ margin-top:10px; font-size:15px; font-weight:400; color:#e8eefc; max-width:880px; line-height:1.45; }
+  .hero .powered{ margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#cfe0ff; letter-spacing:.3px; }
+
+  .body{ padding:16px var(--cds-sp-07) 0; flex:1; display:flex; flex-direction:column; }
+
+  /* ---------- Track (lab-card) columns ---------- */
+  .tracks{ display:grid; grid-template-columns:1fr 1fr; gap:var(--cds-sp-06); }
+  .track{ border:1px solid var(--cds-gray-20); display:flex; flex-direction:column;
+    transition:box-shadow .2s var(--cds-motion); }
+
+  .track .head{ display:flex; gap:var(--cds-sp-05); padding:var(--cds-sp-06) var(--cds-sp-06) var(--cds-sp-05); }
+  .track .num{ flex-shrink:0; width:46px; height:46px; display:flex; align-items:center; justify-content:center;
+    background:var(--cds-blue-60); color:#fff; font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:600; }
+  .track .htext{ flex:1; min-width:0; }
+  .track .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; letter-spacing:.8px;
+    text-transform:uppercase; color:var(--cds-blue-70); }
+  .track h2{ font-size:21px; font-weight:600; line-height:1.15; margin-top:4px; }
+  .track .blurb{ margin:0 var(--cds-sp-06); font-size:13px; color:var(--cds-gray-70); line-height:1.45; }
+
+  .track .pills{ margin:9px var(--cds-sp-06) 0; display:flex; flex-wrap:wrap; gap:6px; }
+  .pill{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:500; background:var(--cds-blue-10);
+    color:var(--cds-blue-70); padding:4px 8px; }
+  .pill.dur{ background:var(--cds-gray-100); color:#fff; }
+
+  .sec{ margin-top:12px; padding:0 var(--cds-sp-06); }
+  .sec-title{ font-size:11px; font-weight:600; letter-spacing:.8px; text-transform:uppercase;
+    color:var(--cds-gray-100); display:flex; align-items:center; gap:7px; margin-bottom:8px; }
+  .sec-title::before{ content:""; width:8px; height:8px; background:var(--cds-blue-60); display:inline-block; }
+
+  /* stats row (feature-style) */
+  .stats{ display:flex; gap:8px; }
+  .stat{ flex:1; min-width:0; background:var(--cds-gray-10); border-left:3px solid var(--cds-blue-60); padding:9px 10px; }
+  .stat .big{ font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:16px; color:var(--cds-blue-70); line-height:1.05; white-space:nowrap; }
+  .stat .lbl{ margin-top:6px; font-size:10.5px; color:var(--cds-gray-70); line-height:1.35; }
+
+  /* build list */
+  .build{ list-style:none; display:grid; gap:5px; }
+  .build li{ position:relative; padding-left:28px; font-size:13px; line-height:1.4; color:var(--cds-gray-90); }
+  .build li .n{ position:absolute; left:0; top:1px; font-family:'IBM Plex Mono',monospace; font-weight:600;
+    font-size:11px; color:var(--cds-blue-60); }
+  .build li b{ font-weight:600; color:var(--cds-gray-100); }
+
+  .needs{ font-size:12px; color:var(--cds-gray-70); line-height:1.5; padding:0 var(--cds-sp-06);
+    margin-top:14px; }
+  .needs b{ color:var(--cds-gray-100); font-weight:600; }
+  .needs .kicker{ display:block; margin-top:8px; padding-top:8px; border-top:1px solid var(--cds-gray-20);
+    font-style:italic; color:var(--cds-gray-80); }
+  .needs .kicker b{ font-style:normal; color:var(--cds-blue-70); }
+
+  .track .spacer{ flex:1; }
+  .quote{ margin:var(--cds-sp-06); margin-top:var(--cds-sp-06); padding:12px var(--cds-sp-05);
+    border-left:4px solid var(--cds-blue-60); background:var(--cds-gray-10); font-size:12px;
+    color:var(--cds-gray-80); line-height:1.45; font-style:italic; }
+  .quote b{ font-style:normal; color:var(--cds-blue-70); }
+
+  /* ---------- info-box footer ---------- */
+  .footer{ margin:10px 0 0; background:var(--cds-blue-10); border-left:4px solid var(--cds-blue-60);
+    padding:11px var(--cds-sp-06); display:flex; justify-content:space-between; align-items:center;
+    gap:var(--cds-sp-06); flex-wrap:wrap; }
+  .footer .why{ font-size:12px; color:var(--cds-gray-90); line-height:1.5; flex:1; min-width:380px; }
+  .footer .why strong{ color:var(--cds-blue-70); display:block; margin-bottom:3px; font-size:12.5px; }
+  .footer .cta{ color:var(--cds-blue-70); font-size:14px; font-weight:600; white-space:nowrap;
+    letter-spacing:.2px; }
+
+  .credit{ text-align:center; font-size:10.5px; color:var(--cds-gray-50); padding:7px 0 9px; flex-shrink:0; }
+
+  @media print{
+    @page{ size:letter portrait; margin:0; }
+    html,body{ background:#fff;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .page{ box-shadow:none; margin:0; width:100%; height:auto; min-height:0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Carbon UI Shell header -->
+  <header class="cds-header">
+    <div class="name">
+      <span class="ibm">IBM</span>
+      <span class="sep"></span>
+      <span class="prod">Bobathon · <b>Workshop Tracks</b></span>
+    </div>
+    <span class="tag">Powered by IBM Bob + watsonx.ai</span>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Two tracks. <b>One AI coding assistant.</b></h1>
+    <p class="sub">Pick your level. Whether you write Java for a living or have never touched code, you'll leave
+      having built something real with IBM Bob — the AI coding assistant that turns plain-English intent into
+      production-quality code.</p>
+    <div class="powered">90 MINUTES EACH · CHOOSE YOUR TRACK · BRING YOUR LAPTOP</div>
+  </section>
+
+  <div class="body">
+    <div class="tracks">
+
+      <!-- ===== TRACK 1 ===== -->
+      <div class="track">
+        <div class="head">
+          <div class="num">01</div>
+          <div class="htext">
+            <div class="eyebrow">For developers</div>
+            <h2>Java Modernization Lab</h2>
+          </div>
+        </div>
+        <div class="blurb">Your Java 8 code is 4 years behind. In 90 minutes, modernize a real codebase to Java 21 —
+          faster, safer, and far cleaner to write.</div>
+        <div class="pills">
+          <span class="pill dur">90 min</span>
+          <span class="pill">java.time</span>
+          <span class="pill">Records</span>
+          <span class="pill">Pattern matching</span>
+          <span class="pill">Sealed classes</span>
+          <span class="pill">Text blocks</span>
+        </div>
+
+        <div class="sec">
+          <div class="sec-title">Why it matters</div>
+          <div class="stats">
+            <div class="stat"><div class="big">12 yrs</div><div class="lbl">Age of Java 8 — many apps never moved.</div></div>
+            <div class="stat"><div class="big">60–75%</div><div class="lbl">Of dev effort goes to maintaining legacy systems.</div></div>
+            <div class="stat"><div class="big">Java 21</div><div class="lbl">LTS: faster, safer, cleaner to write.</div></div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-title">What you'll build</div>
+          <ul class="build">
+            <li><span class="n">01</span>Migrate legacy <b>java.util.Date</b> → modern <b>java.time</b> API</li>
+            <li><span class="n">02</span>Swap verbose data classes for immutable <b>Records</b></li>
+            <li><span class="n">03</span>Simplify <b>instanceof</b> checks with pattern matching</li>
+            <li><span class="n">04</span>Model closed hierarchies with <b>Sealed classes</b></li>
+            <li><span class="n">05</span>Kill multi-line escapes with <b>Text blocks</b></li>
+            <li><span class="n">06</span>Freestyle: build a front-end in any stack</li>
+          </ul>
+        </div>
+
+        <div class="needs"><b>Prerequisites:</b> Java installed (v21 recommended) · IBM Bob · basic Java knowledge · project repo cloned.</div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ===== TRACK 2 ===== -->
+      <div class="track">
+        <div class="head">
+          <div class="num">02</div>
+          <div class="htext">
+            <div class="eyebrow">No experience needed</div>
+            <h2>Build an AI App in 90 Minutes</h2>
+          </div>
+        </div>
+        <div class="blurb">Never written code? Build a working AI-powered travel expense tracker from scratch —
+          you describe what you want, Bob writes it.</div>
+        <div class="pills">
+          <span class="pill dur">90 min</span>
+          <span class="pill">No coding</span>
+          <span class="pill">PDF parsing</span>
+          <span class="pill">watsonx.ai</span>
+          <span class="pill">Charts</span>
+          <span class="pill">CSV export</span>
+        </div>
+
+        <div class="sec">
+          <div class="sec-title">Why it matters</div>
+          <div class="stats">
+            <div class="stat"><div class="big">30–60 min</div><div class="lbl">Manual expense entry per trip — every single time.</div></div>
+            <div class="stat"><div class="big">&lt; 30 sec</div><div class="lbl">Per-receipt processing once the app does it for you.</div></div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-title">What you'll build</div>
+          <ul class="build">
+            <li><span class="n">01</span>Upload PDF receipts — hotels, flights, meals, car rentals</li>
+            <li><span class="n">02</span>AI extracts every line item automatically</li>
+            <li><span class="n">03</span>Interactive charts show your spending breakdown</li>
+            <li><span class="n">04</span>AI writes a plain-English expense summary</li>
+            <li><span class="n">05</span>Export everything to CSV in one click</li>
+          </ul>
+        </div>
+
+        <div class="needs"><b>What you need:</b> A laptop (Mac or Windows) · IBM Bob installed · IBM ID + Cloud account · no coding experience required.
+        <span class="kicker">You describe it in plain English, Bob writes the code. <b>That's not a tutorial — it's a skill.</b></span></div>
+        <div class="spacer"></div>
+      </div>
+
+    </div>
+
+    <!-- Why Bob info-box -->
+    <div class="footer">
+      <div class="why">
+        <strong>Why Bob?</strong>
+        Understands legacy code at depth · transparent cost model · routes to the best LLM (≈20–40% less spend) ·
+        MCP-connected to enterprise tools · runs on-prem / behind firewalls · IBM-level SLAs.
+      </div>
+      <div class="cta">Pick your track and bring your laptop →</div>
+    </div>
+  </div>
+
+  <div class="credit">IBM Carbon Design System · IBM Plex · Built with IBM Bob</div>
+</div>
+</body>
+</html>
